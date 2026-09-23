@@ -785,3 +785,31 @@ footer button:hover,footer a:hover{color:var(--cu)}
 .pub2 .venue{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:4px}
 .pub2-d{color:var(--ink-2);font-size:14px;line-height:1.55;margin-top:10px}
 .pub2 .clinks{margin-top:12px}
+
+/* status pill in the nav (replaces the old top strip) */
+.nav .mark{margin-right:0}
+.nstat{display:inline-flex;align-items:center;gap:8px;margin:0 auto 0 14px;padding:4px 11px;border-radius:99px;white-space:nowrap;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ok);
+  background:var(--ok-soft);border:1px solid color-mix(in srgb,var(--ok) 28%,transparent)}
+.nstat i{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 var(--ok);animation:nst 2.4s ease-out infinite}
+@keyframes nst{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 55%,transparent)}70%,100%{box-shadow:0 0 0 7px transparent}}
+@media (prefers-reduced-motion:reduce){.nstat i{animation:none}}
+@media (max-width:900px){.nstat .nd{display:none}}
+@media (max-width:560px){.mark .sub{display:none}.nstat{margin-left:8px;padding:3px 8px;font-size:9.5px;letter-spacing:.06em}}
+@media (max-width:380px){.mark > span:last-child{display:none}}
+/* trimmed labels */
+.band .wrap{grid-template-columns:repeat(4,1fr)}
+@media (max-width:1000px){.band .wrap{grid-template-columns:repeat(2,1fr)}}
+.spec caption{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0;border:0}
+.spec{border-top:1px solid var(--ink)}
+.doc-sm .doc-s::before{content:"Full paper · "}
+.pub2 .aka{white-space:normal}
+.hB{padding-bottom:0}.hB .film{margin-bottom:0}
+@media print{.nstat{display:none}}
+.mark > span:last-child{white-space:nowrap}
+.mark svg{flex:none}
+@media (max-width:420px){.mark > span:last-child{display:none}.nstat{margin-left:10px}}
+.nbtn svg{flex:none}
+.nav .nbtn,.nstat{flex:none}
+.mark{min-width:0}
+@media (max-width:460px){.mark > span:last-child{display:none}}

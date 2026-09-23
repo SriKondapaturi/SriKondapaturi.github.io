@@ -47,17 +47,6 @@
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
-<!-- ============ datasheet strip ============ -->
-<div class="strip" aria-hidden="true">
-  <div class="wrap">
-    <span>GK-2026</span>
-    <span class="hide-sm">Physical Design Engineer · Datasheet</span>
-    <span class="grow"></span>
-    <span class="hide-sm">Rev 3.0 · Sept 2026</span>
-    <span class="live"><span class="pulse"></span>Available now</span>
-  </div>
-</div>
-
 <!-- ============ nav ============ -->
 <header class="nav">
   <div class="wrap">
@@ -69,6 +58,7 @@
       </svg>
       <span>G. Kondapaturi <span class="sub">/ PD</span></span>
     </a>
+    <span class="nstat"><i aria-hidden="true"></i>Available now<span class="nd"> · Sept 2026</span></span>
     <nav class="links" aria-label="Sections">
       <a href="#work">Work</a>
       <a href="#skills">Skills</a>
@@ -122,7 +112,6 @@
       </div>
     </div>
   </div>
-  <div class="wrap hB-foot"><span>Roll 01 &middot; 10 frames &middot; drag, scroll or tap to open</span><a href="#top">On the clock &darr;</a></div>
   <dialog class="lb" id="lb" aria-label="Photo">
     <img alt="">
     <div class="lb-bar">
@@ -140,12 +129,11 @@
 <div class="hero" id="top">
   <div class="wrap">
     <div>
-      <p class="eyebrow"><span class="otc">On the clock</span>Physical design · Static timing · ASIC backend</p>
+      <p class="eyebrow hl-eyebrow">On the clock</p>
       <h1 class="name"><span>Govardhana</span><span>Kondapaturi</span></h1>
       <p class="tagline">I take digital designs from RTL to <b>signoff-clean GDSII</b>: floorplan, power grid, clock tree, routing, and timing closure at every corner.</p>
 
       <div class="features">
-        <h2>Features</h2>
         <ul>
           <li><b>513 MHz</b> MCMM closure on a 180K-gate SoC with 12 asynchronous clock domains</li>
           <li><b>All-digital PLL</b> designed solo, GDSII submitted for fabrication on SkyWater SKY130</li>
@@ -170,8 +158,8 @@
       </div>
 
       <p class="status">
-        <span><i>M.S. ECE</i> · Fresno State · Aug 2026</span>
-        <span><i>F-1 OPT</i> · 3-yr US work authorization</span>
+        <span><i>M.S. ECE</i> Fresno State, Aug 2026</span>
+        <span><i>F-1 OPT</i> 3-yr US work authorization</span>
         <span>No immediate sponsorship required</span>
         <span><i>Open to relocate</i></span>
       </p>
@@ -207,11 +195,10 @@
      ================================================================ -->
 <div class="band" aria-label="Signoff summary">
   <div class="wrap">
-    <div class="band-h">Signoff summary <b>4 designs</b></div>
     <a class="kpi" href="#p-soc">
       <div class="v"><span data-to="513">513</span><small>MHz</small></div>
       <div class="l">Timing closure</div>
-      <div class="s">Chiplet SoC · MCMM →</div>
+      <div class="s">Chiplet SoC →</div>
     </a>
     <a class="kpi" href="#p-soc">
       <div class="v"><span data-to="12">12</span></div>
@@ -221,12 +208,12 @@
     <a class="kpi" href="#p-npu">
       <div class="v"><span data-to="444">444</span><small>MHz</small></div>
       <div class="l">After pipelining</div>
-      <div class="s">Systolic array · 64 PEs →</div>
+      <div class="s">Systolic array →</div>
     </a>
     <a class="kpi" href="#p-adpll">
       <div class="v"><span data-to="941">941</span><small>cells</small></div>
       <div class="l">Sent to a fab</div>
-      <div class="s">ADPLL · SkyWater SKY130 →</div>
+      <div class="s">ADPLL on SKY130 →</div>
     </a>
   </div>
 </div>
@@ -237,7 +224,7 @@
 <section id="work">
   <div class="wrap">
     <div class="sec-top rv">
-      <div class="sh"><span class="no">01</span><span>Selected work</span><span class="rl"></span><span>RTL → GDSII</span></div>
+      <div class="sh"><span class="no">01</span><span>Selected work</span><span class="rl"></span></div>
       <h2 class="h2">Four designs carried from RTL to signoff, one of them to a fab.</h2>
       <p class="lead">Each is a design I owned end to end. The figures are architecture sketches drawn from the real designs, so you can see what was being built before reading how.</p>
     </div>
@@ -306,7 +293,7 @@
           <span class="role">Sole designer · Aug – Sept 2026</span>
         </div>
         <h3>All-digital PLL on SkyWater SKY130</h3>
-        <p class="what"><b>What it is</b>A phase-locked loop turns a slow, clean reference clock into a faster one that stays locked to it. An all-digital PLL replaces the analog charge pump and filter with logic, so the whole thing can be built from standard cells and pushed through a normal digital flow.</p>
+        <p class="what">A phase-locked loop turns a slow, clean reference clock into a faster one that stays locked to it. An all-digital PLL replaces the analog charge pump and filter with logic, so the whole thing can be built from standard cells and pushed through a normal digital flow.</p>
         <ul class="did">
           <li>Designed the loop in synthesizable Verilog: <b>counter-based time-to-digital phase detector</b>, digital PI loop filter, standard-cell ring-oscillator DCO with a tap mux, programmable ÷N feedback, and an averaging lock detector.</li>
           <li>Hardened through OpenLane/OpenROAD on SKY130 and <b>closed timing at 40 MHz with sub-10% IR drop</b>. DRC, LVS and antenna clean in Magic and KLayout; all 15 Tiny Tapeout prechecks passed on the first attempt.</li>
@@ -383,7 +370,7 @@
           <span class="role">Team lead · Jan – May 2025</span>
         </div>
         <h3>Multi-chiplet SoC with DVFS, CDC and hierarchical power management</h3>
-        <p class="what"><b>What it is</b>A chiplet SoC splits one large system into smaller dies that talk over an on-chip network. It is how modern processors scale, and it makes physical design harder: each chiplet brings its own clocks, supplies and timing budget, and every crossing between them has to be made safe.</p>
+        <p class="what">A chiplet SoC splits one large system into smaller dies that talk over an on-chip network. It is how modern processors scale, and it makes physical design harder: each chiplet brings its own clocks, supplies and timing budget, and every crossing between them has to be made safe.</p>
         <ul class="did">
           <li>Owned the full <b>Cadence Innovus</b> flow on a 180K-gate SoC with 12 asynchronous clock domains: floorplanning, power planning, structured placement, customized CTS and routing.</li>
           <li>Closed <b>513 MHz with multi-mode, multi-corner signoff</b> in PrimeTime, scripting the timing and IR-drop ECOs in TCL across corners.</li>
@@ -405,9 +392,8 @@
             <span class="doc-open" aria-hidden="true">Read</span>
           </button>
           <div class="doc-meta">
-            <span class="doc-k">Paper · submitted to IEEE LASCAS 2027</span>
             <b class="doc-t">A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII</b>
-            <span class="doc-s">PDF · 5 pages · 0.7 MB · with A. Stillmaker</span>
+            <span class="doc-s">PDF · 5 pages</span>
             <div class="doc-act">
               <button class="clink" type="button" data-view>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -443,7 +429,7 @@
           <span class="role">Sole designer · 2025</span>
         </div>
         <h3>8 × 8 systolic neural-network accelerator</h3>
-        <p class="what"><b>What it is</b>A systolic array is a grid of multiply-accumulate cells that hand data to their neighbours every clock. It maps matrix multiplication, the core of neural-network inference, onto hardware with very little traffic back to memory. Google's TPU is built around one.</p>
+        <p class="what">A systolic array is a grid of multiply-accumulate cells that hand data to their neighbours every clock. It maps matrix multiplication, the core of neural-network inference, onto hardware with very little traffic back to memory. Google's TPU is built around one.</p>
         <ul class="did">
           <li>Wrote the RTL for <b>64 pipelined MAC cells</b> (8-bit signed inputs, 32-bit accumulators) plus row-wise bias and ReLU, so the block outputs a finished neural-network layer. A self-checking ModelSim testbench matched every output to a golden model.</li>
           <li>Split each MAC into separate multiply and accumulate stages. The critical path moved out of the array into the bias/ReLU output stage, and <b>timing closed at 2.25 ns (444 MHz)</b> in Design Compiler.</li>
@@ -466,9 +452,8 @@
             <span class="doc-open" aria-hidden="true">Read</span>
           </button>
           <div class="doc-meta">
-            <span class="doc-k">Project report · RTL to GDSII</span>
             <b class="doc-t">Design and Physical Implementation of a Tiny Neural Network Accelerator with an 8×8 Systolic MAC Array</b>
-            <span class="doc-s">PDF · 7 pages · 2.2 MB · layouts, timing and IR-drop math</span>
+            <span class="doc-s">PDF · 7 pages</span>
             <div class="doc-act">
               <button class="clink" type="button" data-view>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -504,7 +489,7 @@
           <span class="role">Sole designer · Aug 2024 – Feb 2025</span>
         </div>
         <h3>DFT, BIST and ATPG flow with Synopsys TetraMAX</h3>
-        <p class="what"><b>What it is</b>Design-for-test adds hardware so a chip can be checked after it comes back from the fab. Scan chains let a tester shift a value into every flip-flop and read the result out; built-in self-test lets the chip generate and check its own patterns.</p>
+        <p class="what">Design-for-test adds hardware so a chip can be checked after it comes back from the fab. Scan chains let a tester shift a value into every flip-flop and read the result out; built-in self-test lets the chip generate and check its own patterns.</p>
         <ul class="did">
           <li>Integrated scan chains and <b>BIST (LFSR/MISR)</b> into an FSM controller through DFT-aware synthesis, then generated ATPG patterns in TetraMAX to reach <b>90.93% stuck-at fault coverage</b>.</li>
           <li>Stitched and balanced the scan chains with test-mode timing checked in both <b>shift and capture</b>, and validated the architecture across RTL and gate-level simulation.</li>
@@ -527,7 +512,7 @@
 <section id="skills" class="alt">
   <div class="wrap">
     <div class="sec-top rv">
-      <div class="sh"><span class="no">02</span><span>Skills</span><span class="rl"></span><span>Self-rated · 1 to 5</span></div>
+      <div class="sh"><span class="no">02</span><span>Skills</span><span class="rl"></span></div>
       <h2 class="h2">What I can take on from day one.</h2>
       <p class="lead">Rated the way hiring portals ask. Every rating is backed by a project on this page, noted under each skill.</p>
     </div>
@@ -669,21 +654,20 @@
       <article class="card pub rv">
         <div class="card-h"><span>Publications</span><span class="rl"></span></div>
         <div class="tagrow" style="margin:0">
-          <span class="st am">Submitted</span><span class="st bl">IEEE LASCAS 2027</span>
+          <span class="st am">Submitted</span>
         </div>
         <h3>A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII</h3>
         <p class="auth"><b>G. Kondapaturi</b> and A. Stillmaker</p>
         <p class="venue">IEEE Latin American Symposium on Circuits and Systems (LASCAS), 2027</p>
-        <div class="cite" id="citation">G. Kondapaturi and A. Stillmaker, "A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII," submitted to IEEE Latin American Symposium on Circuits and Systems (LASCAS), 2027.</div>
+        <div class="cite sr" id="citation">G. Kondapaturi and A. Stillmaker, "A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII," submitted to IEEE Latin American Symposium on Circuits and Systems (LASCAS), 2027.</div>
         <div class="doc doc-sm" data-pdf="Kondapaturi_LASCAS2027_UPF_MultiVoltage_Chiplet_SoC.pdf" data-title="A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII">
           <button class="doc-thumb" type="button" data-view aria-label="Read the paper: A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII">
             <img src="lascas-p1.webp" alt="" loading="lazy" decoding="async" width="520" height="673">
             <span class="doc-open" aria-hidden="true">Read</span>
           </button>
           <div class="doc-meta">
-            <span class="doc-k">Paper · submitted to IEEE LASCAS 2027</span>
             <b class="doc-t">A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII</b>
-            <span class="doc-s">PDF · 5 pages · 0.7 MB · with A. Stillmaker</span>
+            <span class="doc-s">PDF · 5 pages</span>
             <div class="doc-act">
               <button class="clink" type="button" data-view>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -707,7 +691,7 @@
           </a>
         </div>
         <div class="pub2">
-          <div class="pub2-k">Earlier publication · B.Tech research, 2023</div>
+          <div class="pub2-k">Undergraduate paper, 2023</div>
           <h4>An UWB-MIMO Antenna with Altered Coupling and Enhanced Isolation Based on EBG Structures</h4>
           <p class="auth">T. Vijaya Kumar, <b>K. Govardhan Sai</b>, K. Gershon Paul, M. Raghavendra and M. Gopi <span class="aka">(published under Govardhan Sai)</span></p>
           <p class="venue">IJIEMR, vol. 12, no. 4, pp. 226–231, Apr. 2023</p>
@@ -731,7 +715,7 @@
       </article>
 
       <aside class="card rv">
-        <div class="card-h"><span>Certifications · verified on Credly</span><span class="rl"></span></div>
+        <div class="card-h"><span>Certifications</span><span class="rl"></span></div>
         <ul class="certs">
           <li><a href="https://www.credly.com/badges/4142bae6-cac7-4032-86a7-2ef338a541c8/public_url" target="_blank" rel="noopener"><span class="bd"><img src="https://images.credly.com/size/340x340/images/fc0d707b-6bec-43d2-9995-8ae7e56c60b9/blob" alt="" width="76" height="76" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('x')"><b>C</b></span><span class="v">Cadence</span><span class="n">RTL-to-GDSII Flow v7.0 (Advanced)</span><span class="go">✓ Verify ↗</span></a></li>
           <li><a href="https://www.credly.com/badges/9df3b569-fdbd-4721-b610-9cb0029a3a0e/public_url" target="_blank" rel="noopener"><span class="bd"><img src="https://images.credly.com/size/340x340/images/84a45f3e-3b85-46db-bb3d-2e2cdbf50358/image.png" alt="" width="76" height="76" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('x')"><b>C</b></span><span class="v">Cadence</span><span class="n">Basic Static Timing Analysis v3.0</span><span class="go">✓ Verify ↗</span></a></li>
@@ -750,7 +734,7 @@
 <section id="contact">
   <div class="wrap">
     <div class="sec-top rv">
-      <div class="sh"><span class="no">05</span><span>Contact</span><span class="rl"></span><span>Pin configuration</span></div>
+      <div class="sh"><span class="no">05</span><span>Contact</span><span class="rl"></span></div>
       <h2 class="h2">Let's talk about your next tapeout.</h2>
       <p class="lead">I'm looking for physical design, STA and ASIC backend roles in the US and can start now. Email is the fastest way to reach me.</p>
     </div>
@@ -782,7 +766,7 @@
           </svg>
           <div class="bw-ro" aria-live="polite"><div class="bw-ro-in" id="bwRo"></div></div>
         </div>
-        <div class="bw-foot"><span>Hover or tap a pad · the wire carries the signal in</span><span>6 pads · 6 bond wires · 1 engineer</span></div>
+        <div class="bw-foot"><span>Hover or tap a pad</span></div>
         <p class="bw-print">srigovardhan96@gmail.com · +1 (559) 874-7599 · linkedin.com/in/sri-kondapaturi · github.com/SriKondapaturi</p>
       </div>
 
@@ -817,9 +801,7 @@
 <footer>
   <div class="wrap">
     <span>© 2026 Govardhana Kondapaturi</span>
-    <span>GK-2026 datasheet, Rev 3.0</span>
     <span class="grow"></span>
-    <span>Hand-built HTML &amp; CSS · set in SF Pro</span>
     <button type="button" id="printBtn">Print datasheet</button>
     <a href="#top">Back to top ↑</a>
   </div>
