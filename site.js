@@ -360,9 +360,9 @@
       };
       img.src = src;
     });
-    // portrait: try assets/img/headshot.jpg, then assets/headshot.jpg
+    // portrait: try headshot.jpg, then headshot.jpg
     var frame = $('#pframe'); if (!frame) return;
-    var tries = ['assets/img/headshot.jpg', 'assets/headshot.jpg', 'assets/img/headshot.png'];
+    var tries = ['headshot.jpg', 'headshot.jpg', 'headshot.png'];
     (function next(i) {
       if (i >= tries.length) return;
       var im = new Image();
@@ -571,7 +571,7 @@
   /* ===================================================================
      CONTACT: bond-wire die
      =================================================================== */
-  var RESUME_URL = 'assets/Govardhana_Kondapaturi_Resume.pdf';
+  var RESUME_URL = 'Govardhana_Kondapaturi_Resume.pdf';
   var CONTACT_PINS = [
     { n: 1, name: 'EMAIL', type: 'I/O', value: 'srigovardhan96@gmail.com', desc: 'The fastest way to reach me.',
       acts: [['Compose', 'mailto:srigovardhan96@gmail.com', 1], ['Copy', 'copy:srigovardhan96@gmail.com']] },
@@ -660,7 +660,7 @@
     ['Navigate', '→', 'Contact', '05', go('#contact')],
     ['Actions', '@', 'Copy email address', EMAIL, function () { GK.copyEmail(); }],
     ['Actions', '▤', 'Read the LASCAS paper', 'PDF', function () { GK.openPaper && GK.openPaper(); }],
-    ['Actions', '↓', 'Download resume (PDF)', 'PDF', function () { var a = doc.createElement('a'); a.href = 'assets/Govardhana_Kondapaturi_Resume.pdf'; a.download = ''; doc.body.appendChild(a); a.click(); a.remove(); }],
+    ['Actions', '↓', 'Download resume (PDF)', 'PDF', function () { var a = doc.createElement('a'); a.href = 'Govardhana_Kondapaturi_Resume.pdf'; a.download = ''; doc.body.appendChild(a); a.click(); a.remove(); }],
     ['Actions', '↻', 'Replay the chip build-up', '', function () { GK.replay && GK.replay(); }],
     ['Actions', '◐', 'Switch light / dark theme', '', toggleTheme],
     ['Actions', '⎙', 'Print this page as a datasheet', '', function () { setTimeout(function () { window.print(); }, 60); }],
@@ -722,7 +722,7 @@
 
 
   /* ===================================================================
-     CHIP VIEWER: the real ADPLL layout, from assets/chip (tools/gds2web.py)
+     CHIP VIEWER: the real ADPLL layout, from chip (tools/gds2web.py)
      =================================================================== */
   var FAMILY_NOTE = {
     'Flip-flop / latch': 'stores one bit per clock edge',
@@ -752,8 +752,8 @@
     function load(cb) {
       if (window.GK_CHIP) return cb(window.GK_CHIP, '');
       if (!window.fetch || location.protocol === 'file:') return cb(null);
-      fetch('assets/chip/chip.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
-        .then(function (d) { cb(d, 'assets/chip/'); }).catch(function () { cb(null); });
+      fetch('chip.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+        .then(function (d) { cb(d, ''); }).catch(function () { cb(null); });
     }
     load(function (meta, base) {
       if (!meta) return done(false);
