@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Govardhana Kondapaturi · Physical Design Engineer</title>
+<meta name="description" content="Physical design engineer. RTL-to-GDSII ownership on multi-clock-domain SoCs: 513 MHz MCMM closure on a 180K-gate chiplet SoC, and an all-digital PLL submitted to fabrication on SkyWater SKY130. M.S. ECE, Fresno State, 2026.">
+<link rel="canonical" href="https://srikondapaturi.github.io/">
+<meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a111c" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://srikondapaturi.github.io/">
+<meta property="og:title" content="Govardhana Kondapaturi · Physical Design Engineer">
+<meta property="og:description" content="RTL to signoff-clean GDSII. 513 MHz on a 180K-gate, 12-clock-domain chiplet SoC; all-digital PLL submitted to fabrication on SkyWater SKY130.">
+<meta property="og:image" content="https://srikondapaturi.github.io/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://srikondapaturi.github.io/assets/img/og.png">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  document.documentElement.classList.add('js');
+  try{var t=localStorage.getItem('gk-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}
+</script>
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/hello.css">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Person",
+  "name":"Govardhana Kondapaturi",
+  "jobTitle":"Physical Design Engineer",
+  "url":"https://srikondapaturi.github.io/",
+  "email":"mailto:srigovardhan96@gmail.com",
+  "address":{"@type":"PostalAddress","addressLocality":"Fresno","addressRegion":"CA","addressCountry":"US"},
+  "alumniOf":[
+    {"@type":"CollegeOrUniversity","name":"California State University, Fresno"},
+    {"@type":"CollegeOrUniversity","name":"Vasireddy Venkatadri Institute of Technology"}
+  ],
+  "knowsAbout":["Physical design","Static timing analysis","RTL-to-GDSII","Clock tree synthesis","UPF low-power implementation","Cadence Innovus","Synopsys PrimeTime","SkyWater SKY130","OpenROAD"],
+  "sameAs":["https://www.linkedin.com/in/sri-kondapaturi/","https://github.com/SriKondapaturi"]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ============ datasheet strip ============ -->
+<div class="strip" aria-hidden="true">
+  <div class="wrap">
+    <span>GK-2026</span>
+    <span class="hide-sm">Physical Design Engineer · Datasheet</span>
+    <span class="grow"></span>
+    <span class="hide-sm">Rev 3.0 · Sept 2026</span>
+    <span class="live"><span class="pulse"></span>Available now</span>
+  </div>
+</div>
+
+<!-- ============ nav ============ -->
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="Govardhana Kondapaturi, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" fill="none">
+        <rect x="8.5" y="8.5" width="15" height="15" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="12.5" y="12.5" width="7" height="7" rx="1" fill="var(--cu)"/>
+        <path d="M12 8.5V4M16 8.5V4M20 8.5V4M12 28v-4.5M16 28v-4.5M20 28v-4.5M8.5 12H4M8.5 16H4M8.5 20H4M28 12h-4.5M28 16h-4.5M28 20h-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>G. Kondapaturi <span class="sub">/ PD</span></span>
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="nbtn" id="palBtn" type="button" aria-haspopup="dialog" aria-controls="pal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="k-lbl">Jump to</span><span class="menu-lbl">Menu</span><kbd id="kbdHint">⌘K</kbd>
+    </button>
+    <button class="nbtn icon" id="themeBtn" type="button" aria-label="Switch colour theme" title="Switch theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/></svg>
+    </button>
+  </div>
+  <div class="trace" id="trace"></div>
+</header>
+
+<main id="main">
+
+<!-- ================================================================
+     00 · HELLO  (off the clock)
+     ================================================================ -->
+<section id="hello" class="hello hB" aria-labelledby="hello-h">
+  <div class="wrap hB-top">
+    <div class="hl-body">
+      <p class="hl-eyebrow">Off the clock</p>
+      <h2 class="hl-h" id="hello-h">Hello, I&rsquo;m Sri.</h2>
+      <p>I&rsquo;ve travelled a lot of India, and <b>Mysore</b> is still my favourite place.</p>
+      <p>Put me near a <b>beach</b> and I&rsquo;m happy. <b>Coffee</b> is the easiest way to get to me.</p>
+    </div>
+    <div class="hl-body">
+      <p>In the US I&rsquo;ve covered <b>Florida</b> and all of <b>California</b>, San Francisco to LA, plus a run to Las Vegas.</p>
+      <p>My best evenings are <b>good company</b>, a few games of <b>bowling</b>, or a <b>South Indian meal</b> I&rsquo;ve cooked myself.</p>
+      <p class="hl-bridge"><a href="#top"><span>That&rsquo;s me off the clock. <b>On the clock, I take chips from RTL to GDSII.</b></span><i class="arr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></i></a></p>
+    </div>
+  </div>
+  <div class="film" role="region" aria-label="Photos, off the clock">
+    <div class="film-sc">
+      <div class="film-tr">
+        <button type="button" class="fr" aria-label="Open photo: Mysore Palace"><img src="assets/img/life/01-mysore.jpg" width="1280" height="963" alt="Sri walking past Mysore Palace, lit up at night" loading="lazy" decoding="async" draggable="false"><span class="cap">01A &nbsp;Mysore Palace<span>Mysuru</span></span></button>
+        <button type="button" class="fr" aria-label="Open photo: Golden hour"><img src="assets/img/life/02-golden-hour.jpg" width="963" height="1280" alt="Sri looking over his shoulder at sunset" loading="lazy" decoding="async" draggable="false"><span class="cap">02A &nbsp;Golden hour</span></button>
+        <button type="button" class="fr" aria-label="Open photo: Coffee, always"><img src="assets/img/life/03-coffee.jpg" width="775" height="1100" alt="A cup of coffee on a cafe window ledge" loading="lazy" decoding="async" draggable="false"><span class="cap">03A &nbsp;Coffee, always</span></button>
+        <button type="button" class="fr" aria-label="Open photo: Tunnel View"><img src="assets/img/life/04-yosemite.jpg" width="960" height="1280" alt="Sri sitting on the wall at Tunnel View, Yosemite" loading="lazy" decoding="async" draggable="false"><span class="cap">04A &nbsp;Tunnel View<span>Yosemite</span></span></button>
+        <button type="button" class="fr" aria-label="Open photo: Golden Gate"><img src="assets/img/life/05-golden-gate.jpg" width="1144" height="369" alt="Sri in front of the Golden Gate Bridge at sunset" loading="lazy" decoding="async" draggable="false"><span class="cap">05A &nbsp;Golden Gate<span>San Francisco</span></span></button>
+        <button type="button" class="fr" aria-label="Open photo: Southernmost Point"><img src="assets/img/life/06-key-west.jpg" width="1204" height="1490" alt="Sri beside the Southernmost Point marker in Key West at night" loading="lazy" decoding="async" draggable="false"><span class="cap">06A &nbsp;Southernmost Point<span>Key West</span></span></button>
+        <button type="button" class="fr" aria-label="Open photo: On the water"><img src="assets/img/life/07-florida.jpg" width="1010" height="1400" alt="Sri on a fishing boat off Florida, holding up his catch" loading="lazy" decoding="async" draggable="false"><span class="cap">07A &nbsp;On the water<span>Florida</span></span></button>
+        <button type="button" class="fr" aria-label="Open photo: Bowling"><img src="assets/img/life/08-bowling.jpg" width="676" height="1110" alt="Sri releasing a bowling ball down a lane at Fresno State" loading="lazy" decoding="async" draggable="false"><span class="cap">08A &nbsp;Bowling<span>Fresno State</span></span></button>
+        <button type="button" class="fr" aria-label="Open photo: In the kitchen"><img src="assets/img/life/09-kitchen.jpg" width="963" height="1280" alt="Sri in a chef hat, holding a pizza" loading="lazy" decoding="async" draggable="false"><span class="cap">09A &nbsp;In the kitchen</span></button>
+        <button type="button" class="fr" aria-label="Open photo: Red Fort"><img src="assets/img/life/10-red-fort.jpg" width="1280" height="717" alt="The Red Fort in Delhi" loading="lazy" decoding="async" draggable="false"><span class="cap">10A &nbsp;Red Fort<span>Delhi</span></span></button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap hB-foot"><span>Roll 01 &middot; 10 frames &middot; drag, scroll or tap to open</span><a href="#top">On the clock &darr;</a></div>
+  <dialog class="lb" id="lb" aria-label="Photo">
+    <img alt="">
+    <div class="lb-bar">
+      <span class="t"></span>
+      <button type="button" class="p" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <button type="button" class="n" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+      <button type="button" class="x" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+  </dialog>
+</section>
+
+<!-- ================================================================
+     HERO
+     ================================================================ -->
+<div class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow"><span class="otc">On the clock</span>Physical design · Static timing · ASIC backend</p>
+      <h1 class="name"><span>Govardhana</span><span>Kondapaturi</span></h1>
+      <p class="tagline">I take digital designs from RTL to <b>signoff-clean GDSII</b>: floorplan, power grid, clock tree, routing, and timing closure at every corner.</p>
+
+      <div class="features">
+        <h2>Features</h2>
+        <ul>
+          <li><b>513 MHz</b> MCMM closure on a 180K-gate SoC with 12 asynchronous clock domains</li>
+          <li><b>All-digital PLL</b> designed solo, GDSII submitted for fabrication on SkyWater SKY130</li>
+          <li><b>UPF multi-voltage</b> chiplet implementation, paper submitted to IEEE LASCAS 2027</li>
+          <li><b>Innovus, PrimeTime, Calibre, RedHawk-SC</b> and the open OpenROAD flow, automated in TCL and Python</li>
+        </ul>
+      </div>
+
+      <div class="cta">
+        <a class="btn pri" href="#work">
+          Selected work
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+        </a>
+        <a class="btn" href="assets/Govardhana_Kondapaturi_Resume.pdf" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14l3 3 3-3"/></svg>
+          Resume
+        </a>
+        <button class="btn" type="button" data-copy="srigovardhan96@gmail.com" data-toast="Email copied">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          Copy email
+        </button>
+      </div>
+
+      <p class="status">
+        <span><i>M.S. ECE</i> · Fresno State · Aug 2026</span>
+        <span><i>F-1 OPT</i> · 3-yr US work authorization</span>
+        <span>No immediate sponsorship required</span>
+        <span><i>Open to relocate</i></span>
+      </p>
+    </div>
+
+    <!-- layout viewer -->
+    <div class="die" role="group" aria-label="Animated illustration of a chip going from floorplan to signoff">
+      <div class="die-bar">
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span><b>Layout view</b><span class="die-sub"> · RTL → GDSII</span></span>
+        <span class="grow"></span>
+        <span class="illus">Illustrative</span>
+      </div>
+      <div class="die-view">
+        <svg id="die" class="s0" viewBox="0 0 600 600" role="img" aria-label="A die with IO pads, macros, power grid, standard-cell rows, clock tree and routing, built up stage by stage"></svg>
+      </div>
+      <div class="die-foot">
+        <div class="stages" id="stages" role="tablist" aria-label="Flow stage"></div>
+        <div class="cap">
+          <span class="n" id="capN">00 / 06</span>
+          <p id="capT" aria-live="polite">Loading the flow…</p>
+          <button class="replay" id="replay" type="button" aria-label="Replay the flow animation" title="Replay">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     SIGNOFF SUMMARY
+     ================================================================ -->
+<div class="band" aria-label="Signoff summary">
+  <div class="wrap">
+    <div class="band-h">Signoff summary <b>4 designs</b></div>
+    <a class="kpi" href="#p-soc">
+      <div class="v"><span data-to="513">513</span><small>MHz</small></div>
+      <div class="l">Timing closure</div>
+      <div class="s">Chiplet SoC · MCMM →</div>
+    </a>
+    <a class="kpi" href="#p-soc">
+      <div class="v"><span data-to="12">12</span></div>
+      <div class="l">Async clock domains</div>
+      <div class="s">100% CDC/RDC closure →</div>
+    </a>
+    <a class="kpi" href="#p-npu">
+      <div class="v"><span data-to="444">444</span><small>MHz</small></div>
+      <div class="l">After pipelining</div>
+      <div class="s">Systolic array · 64 PEs →</div>
+    </a>
+    <a class="kpi" href="#p-adpll">
+      <div class="v"><span data-to="941">941</span><small>cells</small></div>
+      <div class="l">Sent to a fab</div>
+      <div class="s">ADPLL · SkyWater SKY130 →</div>
+    </a>
+  </div>
+</div>
+
+<!-- ================================================================
+     01 · WORK
+     ================================================================ -->
+<section id="work">
+  <div class="wrap">
+    <div class="sec-top rv">
+      <div class="sh"><span class="no">01</span><span>Selected work</span><span class="rl"></span><span>RTL → GDSII</span></div>
+      <h2 class="h2">Four designs carried from RTL to signoff, one of them to a fab.</h2>
+      <p class="lead">Each is a design I owned end to end. The figures are architecture sketches drawn from the real designs, so you can see what was being built before reading how.</p>
+    </div>
+
+    <!-- ADPLL -->
+    <article class="case rv" id="p-adpll">
+      <div class="viz">
+        <figure class="fig" data-shot="assets/img/adpll-layout.png" data-shot-alt="ADPLL layout on SkyWater SKY130">
+          <div class="fig-tabs" role="tablist">
+            <button type="button" role="tab" data-v="shot" aria-selected="true">Layout</button>
+            <button type="button" role="tab" data-v="arch" aria-selected="false">Architecture</button>
+          </div>
+          <div class="fig-body">
+            <svg class="dg" viewBox="0 0 640 372" role="img" aria-label="ADPLL block diagram: reference into TDC, PI loop filter, ring DCO, divide-by-N feedback, lock detector">
+              <!-- lock detector -->
+              <rect class="bx" x="118" y="24" width="130" height="58" rx="6"/>
+              <text class="t1" x="183" y="50" text-anchor="middle">Lock detect</text>
+              <text class="t2" x="183" y="69" text-anchor="middle">averaging</text>
+              <path class="w" d="M183 150V90"/><path class="ar" d="M183 83l-4 8h8z"/>
+              <path class="w dash" d="M248 53H292"/><text class="tc" x="298" y="57">LOCK</text>
+              <!-- ref -->
+              <rect class="bx" x="8" y="162" width="78" height="56" rx="6"/>
+              <text class="t1" x="47" y="186" text-anchor="middle">REF</text>
+              <text class="t2" x="47" y="205" text-anchor="middle">10 MHz</text>
+              <path class="w" d="M86 190H111"/><path class="ar" d="M118 190l-8-4v8z"/>
+              <!-- TDC -->
+              <rect class="bx" x="118" y="150" width="130" height="80" rx="6"/>
+              <text class="t1" x="183" y="179" text-anchor="middle">TDC</text>
+              <text class="t2" x="183" y="198" text-anchor="middle">Gray counter</text>
+              <text class="t2" x="183" y="215" text-anchor="middle">2-FF sync</text>
+              <path class="w" d="M248 190H273"/><path class="ar" d="M280 190l-8-4v8z"/>
+              <text class="t2" x="264" y="181" text-anchor="middle">Δφ</text>
+              <!-- PI -->
+              <rect class="bx" x="280" y="150" width="130" height="80" rx="6"/>
+              <text class="t1" x="345" y="179" text-anchor="middle">PI filter</text>
+              <text class="t2" x="345" y="198" text-anchor="middle">Kp + Ki</text>
+              <text class="t2" x="345" y="215" text-anchor="middle">accumulator</text>
+              <path class="w" d="M410 190H435"/><path class="ar" d="M442 190l-8-4v8z"/>
+              <!-- DCO -->
+              <rect class="bx hot" x="442" y="150" width="130" height="80" rx="6"/>
+              <text class="t1" x="507" y="179" text-anchor="middle">Ring DCO</text>
+              <text class="t2" x="507" y="198" text-anchor="middle">32 inverters</text>
+              <text class="t2" x="507" y="215" text-anchor="middle">16-tap mux</text>
+              <path class="w cu" d="M572 190H625"/><path class="ar cu" d="M632 190l-8-4v8z"/>
+              <text class="tc" x="604" y="180" text-anchor="middle">f_out</text>
+              <!-- feedback -->
+              <path class="w" d="M604 190V320H417"/><path class="ar" d="M410 320l8-4v8z"/>
+              <rect class="bx" x="280" y="290" width="130" height="60" rx="6"/>
+              <text class="t1" x="345" y="316" text-anchor="middle">÷ N</text>
+              <text class="t2" x="345" y="336" text-anchor="middle">N = 1 – 63</text>
+              <path class="w" d="M280 320H183V237"/><path class="ar" d="M183 230l-4 8h8z"/>
+              <text class="t2" x="232" y="311" text-anchor="middle">f_fb</text>
+              <text class="t2" x="594" y="262" text-anchor="end">N × f_ref</text>
+              <!-- signal travelling the loop -->
+              <circle class="blip" r="4.5"><animateMotion dur="4.6s" repeatCount="indefinite" path="M248 190H604V320H183V230"/></circle>
+              <circle class="blip" r="4.5" opacity=".45"><animateMotion dur="4.6s" begin="-2.3s" repeatCount="indefinite" path="M248 190H604V320H183V230"/></circle>
+              <circle class="blip" r="3.2"><animateMotion dur="1.15s" repeatCount="indefinite" path="M86 190H118"/></circle>
+            </svg>
+          </div>
+          <figcaption><b>Fig. 1</b><span>ADPLL loop. The TDC measures phase error against the 10 MHz reference, the PI filter turns it into a control word, and the DCO speeds up or slows down until ÷N of its output matches.</span></figcaption>
+        </figure>
+      </div>
+      <div>
+        <div class="tagrow">
+          <span class="st ok"><span class="pulse"></span>GDSII submitted · Sept 7, 2026</span>
+          <span class="role">Sole designer · Aug – Sept 2026</span>
+        </div>
+        <h3>All-digital PLL on SkyWater SKY130</h3>
+        <p class="what"><b>What it is</b>A phase-locked loop turns a slow, clean reference clock into a faster one that stays locked to it. An all-digital PLL replaces the analog charge pump and filter with logic, so the whole thing can be built from standard cells and pushed through a normal digital flow.</p>
+        <ul class="did">
+          <li>Designed the loop in synthesizable Verilog: <b>counter-based time-to-digital phase detector</b>, digital PI loop filter, standard-cell ring-oscillator DCO with a tap mux, programmable ÷N feedback, and an averaging lock detector.</li>
+          <li>Hardened through OpenLane/OpenROAD on SKY130 and <b>closed timing at 40 MHz with sub-10% IR drop</b>. DRC, LVS and antenna clean in Magic and KLayout; all 15 Tiny Tapeout prechecks passed on the first attempt.</li>
+          <li>Found and fixed an out-of-range DCO tap index that left half the taps undefined, so the ring could not oscillate at its operating point. <b>Resized the chain from the tap count</b> to 32 inverters and quantized the behavioural model to the same 16 taps.</li>
+          <li>Verified in cocotb with Icarus Verilog: locks at about <b>39.81 MHz for N = 4</b> from the 10 MHz reference, in roughly 650 µs of simulated time.</li>
+        </ul>
+        <table class="spec">
+          <caption>Specifications</caption>
+          <tr><th>Process</th><td>SkyWater SKY130 (sky130A), Tiny Tapeout SKY26c shuttle</td></tr>
+          <tr><th>Flow</th><td>OpenLane / OpenROAD (LibreLane), run in GitHub Actions</td></tr>
+          <tr><th>Footprint</th><td>2 tiles (1 × 2), 31.7% utilization</td></tr>
+          <tr><th>Netlist</th><td>941 standard cells, 142 flip-flops, 18,711 µm of wire</td></tr>
+          <tr><th>Timing</th><td>Closed at 40 MHz, sub-10% IR drop</td></tr>
+          <tr><th>Output</th><td>N × 10 MHz, N = 1 – 63 set on <span class="mono">ui_in[5:0]</span></td></tr>
+          <tr><th>Silicon</th><td>Expected May 2027</td></tr>
+        </table>
+        <div class="clinks">
+          <a class="clink" href="https://srikondapaturi.github.io/tt-um-govardhana-adpll/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8l-9-5-9 5v8l9 5z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg>
+            Explore the layout in 3D
+          </a>
+          <a class="clink" href="https://github.com/SriKondapaturi/tt-um-govardhana-adpll" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>
+            Source on GitHub
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- CHIPLET SOC -->
+    <article class="case flip rv" id="p-soc">
+      <div class="viz">
+        <figure class="fig" data-shot="assets/img/soc-layout.jpg" data-shot-alt="Routed chiplet SoC die in Cadence Innovus, four power domains" data-shot-cap="Routed die in Cadence Innovus, from the LASCAS paper: the always-on PD_TOP region, the switchable NPU domain with its level shifters and isolation at the edge, and M8 power stripes at a 40 µm pitch.">
+          <div class="fig-tabs" role="tablist">
+            <button type="button" role="tab" data-v="shot" aria-selected="true">Layout</button>
+            <button type="button" role="tab" data-v="arch" aria-selected="false">Architecture</button>
+          </div>
+          <div class="fig-body">
+            <svg class="dg" viewBox="0 0 640 380" role="img" aria-label="Three chiplets, each a separate supply domain with its own clock domains, connected by a network-on-chip with level shifters and isolation at each crossing">
+              <text class="t3" x="320" y="30" text-anchor="middle">180K gates · 12 async clock domains · 513 MHz</text>
+              <!-- chiplet 0 -->
+              <rect x="24" y="52" width="168" height="252" rx="8" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.3"/>
+              <text class="t3" x="36" y="72">Chiplet 0 · PD0</text>
+              <!-- chiplet 1 -->
+              <rect x="236" y="52" width="168" height="252" rx="8" fill="var(--cu-soft)" stroke="var(--cu)" stroke-width="1.3"/>
+              <text class="t3" x="248" y="72">Chiplet 1 · PD1</text>
+              <!-- chiplet 2 -->
+              <rect x="448" y="52" width="168" height="252" rx="8" fill="var(--ok-soft)" stroke="var(--ok)" stroke-width="1.3"/>
+              <text class="t3" x="460" y="72">Chiplet 2 · PD2</text>
+              <g id="socTiles"></g>
+              <!-- NoC links -->
+              <path class="w cu flowline" d="M130 274H298"/>
+              <path class="w cu flowline" d="M342 274H510"/>
+              <rect x="199" y="262" width="30" height="24" rx="4" fill="var(--card)" stroke="var(--ink-2)"/>
+              <text class="t2" x="214" y="278.5" text-anchor="middle" fill="var(--ink)">LS</text>
+              <rect x="411" y="262" width="30" height="24" rx="4" fill="var(--card)" stroke="var(--ink-2)"/>
+              <text class="t2" x="426" y="278.5" text-anchor="middle" fill="var(--ink)">LS</text>
+              <!-- legend -->
+              <g transform="translate(24 334)">
+                <rect width="12" height="12" rx="2" fill="var(--blue-soft)" stroke="var(--blue)"/><rect x="17" width="12" height="12" rx="2" fill="var(--cu-soft)" stroke="var(--cu)"/><rect x="34" width="12" height="12" rx="2" fill="var(--ok-soft)" stroke="var(--ok)"/>
+                <text class="t2" x="54" y="10.5">supply domains</text>
+                <path class="w cu" d="M184 6H210"/><text class="t2" x="217" y="10.5">NoC link</text>
+                <rect x="296" y="-3" width="24" height="18" rx="3" fill="var(--card)" stroke="var(--ink-2)"/><text class="t2" x="308" y="10.5" text-anchor="middle" fill="var(--ink)">LS</text>
+                <text class="t2" x="327" y="10.5">level shift + isolation</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption><b>Fig. 2</b><span>Three chiplets on a network-on-chip spanning multiple supply domains, with level shifting and isolation wherever a signal crosses between them. Schematic, not to scale; how supply and clock domains map onto chiplets is illustrative.</span></figcaption>
+        </figure>
+      </div>
+      <div>
+        <div class="tagrow">
+          <span class="st cu">Paper submitted · IEEE LASCAS 2027</span>
+          <span class="role">Team lead · Jan – May 2025</span>
+        </div>
+        <h3>Multi-chiplet SoC with DVFS, CDC and hierarchical power management</h3>
+        <p class="what"><b>What it is</b>A chiplet SoC splits one large system into smaller dies that talk over an on-chip network. It is how modern processors scale, and it makes physical design harder: each chiplet brings its own clocks, supplies and timing budget, and every crossing between them has to be made safe.</p>
+        <ul class="did">
+          <li>Owned the full <b>Cadence Innovus</b> flow on a 180K-gate SoC with 12 asynchronous clock domains: floorplanning, power planning, structured placement, customized CTS and routing.</li>
+          <li>Closed <b>513 MHz with multi-mode, multi-corner signoff</b> in PrimeTime, scripting the timing and IR-drop ECOs in TCL across corners.</li>
+          <li>Reached <b>100% structural CDC/RDC closure</b> in SpyGlass and JasperGold, with clean logic-equivalence signoff in Conformal.</li>
+          <li>Signed off physical verification clean in <b>Calibre DRC/LVS</b> and analysed IR drop and electromigration in RedHawk-SC.</li>
+        </ul>
+        <table class="spec">
+          <caption>Specifications</caption>
+          <tr><th>Process</th><td>Nangate 45 nm</td></tr>
+          <tr><th>Size</th><td>180K gates, three chiplets on a NoC</td></tr>
+          <tr><th>Clocking</th><td>12 asynchronous domains</td></tr>
+          <tr><th>Power</th><td>Multi-supply UPF, DVFS, hierarchical power management</td></tr>
+          <tr><th>Timing</th><td>513 MHz, MCMM signoff in PrimeTime</td></tr>
+          <tr><th>Signoff</th><td>CDC/RDC 100% · LEC clean · DRC/LVS clean · IR/EM analysed</td></tr>
+        </table>
+        <div class="doc" data-pdf="assets/docs/Kondapaturi_LASCAS2027_UPF_MultiVoltage_Chiplet_SoC.pdf" data-title="A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII">
+          <button class="doc-thumb" type="button" data-view aria-label="Read the paper: A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII">
+            <img src="assets/docs/lascas-p1.webp" alt="" loading="lazy" decoding="async" width="520" height="673">
+            <span class="doc-open" aria-hidden="true">Read</span>
+          </button>
+          <div class="doc-meta">
+            <span class="doc-k">Paper · submitted to IEEE LASCAS 2027</span>
+            <b class="doc-t">A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII</b>
+            <span class="doc-s">PDF · 5 pages · 0.7 MB · with A. Stillmaker</span>
+            <div class="doc-act">
+              <button class="clink" type="button" data-view>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                Read
+              </button>
+              <a class="clink" href="assets/docs/Kondapaturi_LASCAS2027_UPF_MultiVoltage_Chiplet_SoC.pdf" download>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+                Download
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SYSTOLIC -->
+    <article class="case rv" id="p-npu">
+      <div class="viz">
+        <figure class="fig" data-shot="assets/img/systolic-layout.jpg" data-shot-alt="Routed 8 by 8 systolic array in Cadence Innovus" data-shot-cap="Routed die in Cadence Innovus after filler insertion, from the project report: M7/M8 power stripes run over 30,548 placed cells, with the IO pins on the left and bottom edges.">
+          <div class="fig-tabs" role="tablist">
+            <button type="button" role="tab" data-v="shot" aria-selected="true">Layout</button>
+            <button type="button" role="tab" data-v="arch" aria-selected="false">Architecture</button>
+          </div>
+          <div class="fig-body">
+            <svg class="dg" id="figNpu" viewBox="0 0 640 380" role="img" aria-label="An 8 by 8 grid of multiply-accumulate processing elements with a diagonal wave of activity sweeping across it"></svg>
+          </div>
+          <figcaption><b>Fig. 3</b><span>8 × 8 systolic array. Operands stream in from the edges and move one cell per clock, so the work sweeps across the array as a diagonal wave.</span></figcaption>
+        </figure>
+      </div>
+      <div>
+        <div class="tagrow">
+          <span class="st ok">GDSII · DRC clean</span>
+          <span class="role">Sole designer · 2025</span>
+        </div>
+        <h3>8 × 8 systolic neural-network accelerator</h3>
+        <p class="what"><b>What it is</b>A systolic array is a grid of multiply-accumulate cells that hand data to their neighbours every clock. It maps matrix multiplication, the core of neural-network inference, onto hardware with very little traffic back to memory. Google's TPU is built around one.</p>
+        <ul class="did">
+          <li>Wrote the RTL for <b>64 pipelined MAC cells</b> (8-bit signed inputs, 32-bit accumulators) plus row-wise bias and ReLU, so the block outputs a finished neural-network layer. A self-checking ModelSim testbench matched every output to a golden model.</li>
+          <li>Split each MAC into separate multiply and accumulate stages. The critical path moved out of the array into the bias/ReLU output stage, and <b>timing closed at 2.25 ns (444 MHz)</b> in Design Compiler.</li>
+          <li>Took the 30,548-cell netlist through Innovus: 70% utilization floorplan, M9/M10 rings with an M7/M8 stripe mesh, CCOpt clock tree, NanoRoute, <b>zero DRC violations</b>, filler insertion.</li>
+          <li>Sized the power grid by hand before CTS: 24.05 mW after placement gives 25.3 mA through eleven parallel M8 stripes (≈ 1.03 Ω), so <b>about 26 mV of IR drop against a 47.5 mV budget</b>. No extra straps needed.</li>
+        </ul>
+        <table class="spec">
+          <caption>Specifications</caption>
+          <tr><th>Process</th><td>Nangate 45 nm</td></tr>
+          <tr><th>Array</th><td>8 × 8, 64 pipelined MAC PEs · bias + ReLU layer</td></tr>
+          <tr><th>Size</th><td>30,548 cells, 6,976 flip-flops · 77,307 µm² cell area</td></tr>
+          <tr><th>Timing</th><td>444 MHz (2.25 ns) after pipelining</td></tr>
+          <tr><th>Power</th><td>24.05 mW post-placement at 0.95 V</td></tr>
+          <tr><th>IR drop</th><td>≈ 26 mV, within the 5% (47.5 mV) budget</td></tr>
+          <tr><th>Tools</th><td>ModelSim, Design Compiler, Innovus</td></tr>
+        </table>
+        <div class="doc" data-pdf="assets/docs/Kondapaturi_8x8_Systolic_Array_NN_Accelerator.pdf" data-title="Design and Physical Implementation of a Tiny Neural Network Accelerator with an 8×8 Systolic MAC Array">
+          <button class="doc-thumb" type="button" data-view aria-label="Read the report: Design and Physical Implementation of a Tiny Neural Network Accelerator with an 8×8 Systolic MAC Array">
+            <img src="assets/docs/systolic-p1.webp" alt="" loading="lazy" decoding="async" width="520" height="673">
+            <span class="doc-open" aria-hidden="true">Read</span>
+          </button>
+          <div class="doc-meta">
+            <span class="doc-k">Project report · RTL to GDSII</span>
+            <b class="doc-t">Design and Physical Implementation of a Tiny Neural Network Accelerator with an 8×8 Systolic MAC Array</b>
+            <span class="doc-s">PDF · 7 pages · 2.2 MB · layouts, timing and IR-drop math</span>
+            <div class="doc-act">
+              <button class="clink" type="button" data-view>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                Read
+              </button>
+              <a class="clink" href="assets/docs/Kondapaturi_8x8_Systolic_Array_NN_Accelerator.pdf" download>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+                Download
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- DFT -->
+    <article class="case flip rv" id="p-dft">
+      <div class="viz">
+        <figure class="fig" data-shot="assets/img/dft-layout.png" data-shot-alt="DFT scan chain result">
+          <div class="fig-tabs" role="tablist">
+            <button type="button" role="tab" data-v="shot" aria-selected="true">Screenshot</button>
+            <button type="button" role="tab" data-v="arch" aria-selected="false">Architecture</button>
+          </div>
+          <div class="fig-body">
+            <svg class="dg" id="figDft" viewBox="0 0 640 380" role="img" aria-label="Scan chain snaking through a grid of flip-flops, fed by ATPG patterns or an LFSR and compacted by a MISR"></svg>
+          </div>
+          <figcaption><b>Fig. 4</b><span>Scan chain stitched through the controller's flip-flops. Patterns come from TetraMAX ATPG or the on-chip LFSR, and the MISR compresses the responses into one signature.</span></figcaption>
+        </figure>
+      </div>
+      <div>
+        <div class="tagrow">
+          <span class="st am">90.93% stuck-at coverage</span>
+          <span class="role">Sole designer · Aug 2024 – Feb 2025</span>
+        </div>
+        <h3>DFT, BIST and ATPG flow with Synopsys TetraMAX</h3>
+        <p class="what"><b>What it is</b>Design-for-test adds hardware so a chip can be checked after it comes back from the fab. Scan chains let a tester shift a value into every flip-flop and read the result out; built-in self-test lets the chip generate and check its own patterns.</p>
+        <ul class="did">
+          <li>Integrated scan chains and <b>BIST (LFSR/MISR)</b> into an FSM controller through DFT-aware synthesis, then generated ATPG patterns in TetraMAX to reach <b>90.93% stuck-at fault coverage</b>.</li>
+          <li>Stitched and balanced the scan chains with test-mode timing checked in both <b>shift and capture</b>, and validated the architecture across RTL and gate-level simulation.</li>
+        </ul>
+        <table class="spec">
+          <caption>Specifications</caption>
+          <tr><th>ATPG</th><td>Synopsys TetraMAX, 90.93% stuck-at coverage</td></tr>
+          <tr><th>Scan</th><td>Balanced chains, shift and capture timing checked</td></tr>
+          <tr><th>BIST</th><td>LFSR pattern generator, MISR response compactor</td></tr>
+          <tr><th>Validation</th><td>RTL and gate-level simulation</td></tr>
+        </table>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ================================================================
+     02 · SKILLS
+     ================================================================ -->
+<section id="skills" class="alt">
+  <div class="wrap">
+    <div class="sec-top rv">
+      <div class="sh"><span class="no">02</span><span>Skills</span><span class="rl"></span><span>Self-rated · 1 to 5</span></div>
+      <h2 class="h2">What I can take on from day one.</h2>
+      <p class="lead">Rated the way hiring portals ask. Every rating is backed by a project on this page, noted under each skill.</p>
+    </div>
+
+    <div class="sk-bar rv">
+      <div class="legend" aria-label="Rating scale">
+        <span><b class="lv" data-lv="5"><i></i><i></i><i></i><i></i><i></i></b>Expert · owned it to signoff</span>
+        <span><b class="lv" data-lv="4"><i></i><i></i><i></i><i></i><i></i></b>Advanced · hands-on to closure</span>
+        <span><b class="lv" data-lv="3"><i></i><i></i><i></i><i></i><i></i></b>Proficient · used in projects</span>
+        <span><b class="lv" data-lv="2"><i></i><i></i><i></i><i></i><i></i></b>Familiar · training</span>
+      </div>
+      <div class="filter" role="group" aria-label="Highlight skills by project">
+        <span class="lbl">Used in</span>
+        <button class="fchip" type="button" data-f="all" aria-pressed="true">All</button>
+        <button class="fchip" type="button" data-f="adpll" aria-pressed="false"><i class="p-adpll"></i>ADPLL</button>
+        <button class="fchip" type="button" data-f="soc" aria-pressed="false"><i class="p-soc"></i>SoC</button>
+        <button class="fchip" type="button" data-f="npu" aria-pressed="false"><i class="p-npu"></i>Systolic</button>
+        <button class="fchip" type="button" data-f="dft" aria-pressed="false"><i class="p-dft"></i>DFT</button>
+      </div>
+    </div>
+
+    <!-- To change a rating, edit data-lv="1..5" on that skill. The dots and the label follow automatically. -->
+    <div class="skgrid" id="skgrid">
+      <article class="skc" data-g="pi"><header><h3>Physical implementation</h3><span class="cnt">6</span></header><ul><li class="sk" data-p="soc adpll npu"><div class="sk-top"><span class="sk-n">Floorplanning &amp; macro placement</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i><i class="p-npu" title="Systolic"></i></span>4-domain fenced floorplan, 580 µm die</div></li><li class="sk" data-p="soc npu"><div class="sk-top"><span class="sk-n">Power planning &amp; grid sizing</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span>Grid sized from signoff current: 31 of 47.5 mV</div></li><li class="sk" data-p="soc npu"><div class="sk-top"><span class="sk-n">Placement &amp; congestion analysis</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span>66k cells + 299 MV cells legalized</div></li><li class="sk" data-p="soc adpll npu"><div class="sk-top"><span class="sk-n">Clock tree synthesis</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i><i class="p-npu" title="Systolic"></i></span>CTS re-opt: 507 → 102 buffers, 9,457 sinks</div></li><li class="sk" data-p="soc adpll npu"><div class="sk-top"><span class="sk-n">Routing &amp; DRC fixing</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i><i class="p-npu" title="Systolic"></i></span>Detail route with zero overflow</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Timing &amp; IR-drop ECOs</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>TCL-scripted ECOs across corners</div></li></ul></article><article class="skc" data-g="sta"><header><h3>Timing & constraints</h3><span class="cnt">3</span></header><ul><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">STA: setup / hold, MCMM</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>PrimeTime signoff; mentored ~25 students</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">SDC constraint development</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>Multi-clock designs; taught SDC debugging</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">CDC / RDC analysis</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>100% structural closure in SpyGlass</div></li></ul></article><article class="skc" data-g="lp"><header><h3>Low-power design</h3><span class="cnt">4</span></header><ul><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">UPF / IEEE 1801 power intent</span><span class="lv" data-lv="5" role="img" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>Wrote the 4-domain UPF; LASCAS paper</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Isolation, level shifters, power switches</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>299 cells inserted from intent, 48-header ring</div></li><li class="sk" data-p="npu"><div class="sk-top"><span class="sk-n">Dynamic power analysis</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-npu" title="Systolic"></i></span>Power from DC and post-placement Innovus</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">DVFS</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>3 operating points, post-route power</div></li></ul></article><article class="skc" data-g="so"><header><h3>Signoff & verification</h3><span class="cnt">6</span></header><ul><li class="sk" data-p="soc adpll"><div class="sk-top"><span class="sk-n">DRC / LVS</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i></span>Calibre; Magic + KLayout at tapeout</div></li><li class="sk" data-p="adpll soc"><div class="sk-top"><span class="sk-n">Antenna, ERC, PEX</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-adpll" title="ADPLL"></i><i class="p-soc" title="SoC"></i></span>Antenna-clean SKY130 tapeout</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">IR drop &amp; EM analysis</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>RedHawk-SC; static IR 31 mV</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Logic equivalence (LEC)</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>Conformal and Formality</div></li><li class="sk" data-p="dft soc"><div class="sk-top"><span class="sk-n">DFT: scan &amp; ATPG</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-dft" title="DFT"></i><i class="p-soc" title="SoC"></i></span>90.93% stuck-at · 99.06% transition</div></li><li class="sk" data-p="dft"><div class="sk-top"><span class="sk-n">Gate-level sim with SDF</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-dft" title="DFT"></i></span>Shift &amp; capture timing validated</div></li></ul></article><article class="skc" data-g="code"><header><h3>Open-source flow & scripting</h3><span class="cnt">7</span></header><ul><li class="sk" data-p="adpll"><div class="sk-top"><span class="sk-n">OpenLane / OpenROAD</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-adpll" title="ADPLL"></i></span>Solo tapeout on SkyWater SKY130</div></li><li class="sk" data-p="adpll"><div class="sk-top"><span class="sk-n">Magic · KLayout</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-adpll" title="ADPLL"></i></span>DRC / LVS for tapeout</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">TCL</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>ECO, regression, report automation</div></li><li class="sk" data-p=""><div class="sk-top"><span class="sk-n">Python</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"></span>STA report parsing, PPA tracking</div></li><li class="sk" data-p="adpll soc npu"><div class="sk-top"><span class="sk-n">Verilog / SystemVerilog</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-adpll" title="ADPLL"></i><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span>ADPLL, 22-module SoC, systolic array</div></li><li class="sk" data-p=""><div class="sk-top"><span class="sk-n">Linux</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"></span>Daily driver for every flow</div></li><li class="sk" data-p=""><div class="sk-top"><span class="sk-n">Perl</span><span class="lv" data-lv="2" role="img" aria-label="2 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"></span>Scripting basics</div></li></ul></article><article class="skc" data-g="tools"><header><h3>EDA tools</h3><span class="cnt">10</span></header><ul><li class="sk" data-p="soc npu"><div class="sk-top"><span class="sk-n">Cadence Innovus</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span>Full P&amp;R flow, two designs</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Synopsys PrimeTime</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>MCMM signoff · Synopsys badge</div></li><li class="sk" data-p="soc npu dft"><div class="sk-top"><span class="sk-n">Synopsys Design Compiler</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i><i class="p-dft" title="DFT"></i></span>DFT-aware synthesis</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Siemens Calibre</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>DRC / LVS signoff</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Ansys RedHawk-SC</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>IR drop and EM</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Synopsys SpyGlass</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>CDC / RDC and lint</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Cadence JasperGold</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>Formal CDC checks</div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Cadence Conformal · Synopsys Formality</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-soc" title="SoC"></i></span>Equivalence checking</div></li><li class="sk" data-p="dft"><div class="sk-top"><span class="sk-n">Synopsys TetraMAX</span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"><i class="p-dft" title="DFT"></i></span>ATPG, fault coverage</div></li><li class="sk" data-p=""><div class="sk-top"><span class="sk-n">Synopsys Fusion Compiler</span><span class="lv" data-lv="2" role="img" aria-label="2 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div><div class="sk-w"><span class="tg"></span>Synopsys certification</div></li></ul></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     03 · ABOUT
+     ================================================================ -->
+<section id="about">
+  <div class="wrap">
+    <div class="about">
+      <div class="portrait rv">
+        <div class="pframe" id="pframe">
+          <div class="ph" aria-hidden="true"><span>GK</span></div>
+          <i class="tick tl"></i><i class="tick tr"></i><i class="tick bl"></i><i class="tick br"></i>
+        </div>
+        <dl class="facts">
+          <dt>Based</dt><dd>Fresno, California</dd>
+          <dt>Degree</dt><dd>M.S. ECE, August 2026</dd>
+          <dt>Work auth</dt><dd>F-1 OPT, three years</dd>
+          <dt>Sponsorship</dt><dd>Not required immediately</dd>
+          <dt>Relocation</dt><dd>Open</dd>
+        </dl>
+      </div>
+
+      <div class="rv">
+        <div class="sh"><span class="no">03</span><span>About</span><span class="rl"></span></div>
+        <h2 class="h2">Two years owning the backend, end to end.</h2>
+        <div class="bio">
+          <p>I finished my M.S. in Electrical and Computer Engineering at <b>California State University, Fresno</b>, where I spent two years as a research assistant to <b>Prof. Aaron Stillmaker</b>, chair of the ECE department, working on the physical implementation of multi-chiplet SoCs.</p>
+          <p>I am most at home between synthesis and signoff: the stretch where a netlist gets a floorplan, a power grid, a clock tree and wires, and then has to meet timing at every corner. I work in both the commercial stack industry signs off with and the open flow that let me take a chip to tapeout on my own. Along the way I helped about 25 graduate students through STA, SDC and CDC debugging.</p>
+        </div>
+
+        <ol class="path">
+          <li>
+            <div class="when">2019 – 2023</div>
+            <div>
+              <h4>B.Tech, Electronics &amp; Communication Engineering</h4>
+              <div class="org">Vasireddy Venkatadri Institute of Technology, Vijayawada, India</div>
+            </div>
+          </li>
+          <li class="key">
+            <div class="when">Aug 2024 –<br>Aug 2026</div>
+            <div>
+              <h4>Research Assistant, Advanced VLSI Design</h4>
+              <div class="org">California State University, Fresno · with Prof. Aaron Stillmaker</div>
+              <ul>
+                <li>Multi-chiplet SoC architectures, UPF-driven multi-voltage implementation, and NoC-based physical design</li>
+                <li>RTL-to-GDSII signoff on Nangate 45 nm with Innovus, PrimeTime, Design Compiler, SpyGlass and JasperGold</li>
+                <li>Mentored about 25 graduate students through STA, SDC and CDC/lint debugging</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div class="when">2024 – 2025</div>
+            <div>
+              <h4>DFT flow, systolic accelerator, chiplet SoC</h4>
+              <div class="org">Three RTL-to-GDSII designs, the last as team lead</div>
+            </div>
+          </li>
+          <li class="key">
+            <div class="when">Aug 2026</div>
+            <div>
+              <h4>M.S., Electrical &amp; Computer Engineering</h4>
+              <div class="org">California State University, Fresno · Lyles College of Engineering</div>
+            </div>
+          </li>
+          <li class="key">
+            <div class="when">Sept 2026</div>
+            <div>
+              <h4>ADPLL GDSII submitted for fabrication</h4>
+              <div class="org">Tiny Tapeout SKY26c · SkyWater SKY130</div>
+              <div class="note">Chiplet SoC paper also submitted to IEEE LASCAS 2027.</div>
+            </div>
+          </li>
+          <li class="next">
+            <div class="when">Next</div>
+            <div>
+              <h4><a href="#contact">Physical design on your team →</a></h4>
+              <div class="org">Physical design, STA or ASIC backend, anywhere in the US</div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     ENDORSEMENT  (hidden until a real quote is pasted in: fill the
+     <p class="q"> text, then delete the word "hidden" on the section)
+     ================================================================ -->
+<section id="endorse" class="endorse" hidden>
+  <div class="wrap">
+    <figure class="quote rv">
+      <svg class="qmark" viewBox="0 0 48 36" aria-hidden="true"><path d="M0 36V21C0 9 6 2 18 0l2 5C13 7 10 11 10 17h9v19zm27 0V21C27 9 33 2 45 0l2 5c-7 2-10 6-10 12h9v19z" fill="currentColor"/></svg>
+      <blockquote><p class="q"></p></blockquote>
+      <figcaption>
+        <b>Prof. Aaron Stillmaker</b>
+        <span>Chair, Department of Electrical &amp; Computer Engineering, California State University, Fresno · research advisor</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ================================================================
+     04 · RESEARCH & CREDENTIALS
+     ================================================================ -->
+<section id="research" class="alt">
+  <div class="wrap">
+    <div class="sec-top rv">
+      <div class="sh"><span class="no">04</span><span>Research &amp; credentials</span><span class="rl"></span></div>
+      <h2 class="h2">Two papers, and the badges to check.</h2>
+    </div>
+    <div class="rc">
+      <article class="card pub rv">
+        <div class="card-h"><span>Publications</span><span class="rl"></span></div>
+        <div class="tagrow" style="margin:0">
+          <span class="st am">Submitted</span><span class="st bl">IEEE LASCAS 2027</span>
+        </div>
+        <h3>A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII</h3>
+        <p class="auth"><b>G. Kondapaturi</b> and A. Stillmaker</p>
+        <p class="venue">IEEE Latin American Symposium on Circuits and Systems (LASCAS), 2027</p>
+        <div class="cite" id="citation">G. Kondapaturi and A. Stillmaker, "A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII," submitted to IEEE Latin American Symposium on Circuits and Systems (LASCAS), 2027.</div>
+        <div class="doc doc-sm" data-pdf="assets/docs/Kondapaturi_LASCAS2027_UPF_MultiVoltage_Chiplet_SoC.pdf" data-title="A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII">
+          <button class="doc-thumb" type="button" data-view aria-label="Read the paper: A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII">
+            <img src="assets/docs/lascas-p1.webp" alt="" loading="lazy" decoding="async" width="520" height="673">
+            <span class="doc-open" aria-hidden="true">Read</span>
+          </button>
+          <div class="doc-meta">
+            <span class="doc-k">Paper · submitted to IEEE LASCAS 2027</span>
+            <b class="doc-t">A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII</b>
+            <span class="doc-s">PDF · 5 pages · 0.7 MB · with A. Stillmaker</span>
+            <div class="doc-act">
+              <button class="clink" type="button" data-view>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                Read
+              </button>
+              <a class="clink" href="assets/docs/Kondapaturi_LASCAS2027_UPF_MultiVoltage_Chiplet_SoC.pdf" download>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+                Download
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="clinks">
+          <button class="clink" type="button" data-copy-from="#citation" data-toast="Citation copied">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+            Copy citation
+          </button>
+          <a class="clink" href="#p-soc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/></svg>
+            See the design
+          </a>
+        </div>
+        <div class="pub2">
+          <div class="pub2-k">Earlier publication · B.Tech research, 2023</div>
+          <h4>An UWB-MIMO Antenna with Altered Coupling and Enhanced Isolation Based on EBG Structures</h4>
+          <p class="auth">T. Vijaya Kumar, <b>K. Govardhan Sai</b>, K. Gershon Paul, M. Raghavendra and M. Gopi <span class="aka">(published under Govardhan Sai)</span></p>
+          <p class="venue">IJIEMR, vol. 12, no. 4, pp. 226–231, Apr. 2023</p>
+          <p class="pub2-d">A four-port ultra-wideband MIMO antenna designed in CST: 3.0–16.2 GHz bandwidth, a notch at 4.6 GHz, and an EBG structure that holds isolation above 17.5 dB between elements.</p>
+          <div class="cite sr" id="citation2">T. Vijaya Kumar, K. Govardhan Sai, K. Gershon Paul, M. Raghavendra and M. Gopi, "An UWB-MIMO Antenna with Altered Coupling and Enhanced Isolation Based on EBG Structures," International Journal for Innovative Engineering and Management Research (IJIEMR), vol. 12, no. 4, pp. 226–231, Apr. 2023, doi: 10.48047/IJIEMR/V12/ISSUE 04/30.</div>
+          <div class="clinks">
+            <a class="clink" href="https://ijiemr.org/downloads/paper/Volume-12/an-uwb-mimo-antenna-with-altered-coupling-and-enhanced-isolation-based-on-ebg-structures" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+              View on journal
+            </a>
+            <a class="clink" href="https://ijiemr.org/public/uploads/paper/327981680857955.pdf" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
+              PDF ↗
+            </a>
+            <button class="clink" type="button" data-copy-from="#citation2" data-toast="Citation copied">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              Copy citation
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <aside class="card rv">
+        <div class="card-h"><span>Certifications · verified on Credly</span><span class="rl"></span></div>
+        <ul class="certs">
+          <li><a href="https://www.credly.com/badges/4142bae6-cac7-4032-86a7-2ef338a541c8/public_url" target="_blank" rel="noopener"><span class="bd"><img src="https://images.credly.com/size/340x340/images/fc0d707b-6bec-43d2-9995-8ae7e56c60b9/blob" alt="" width="76" height="76" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('x')"><b>C</b></span><span class="v">Cadence</span><span class="n">RTL-to-GDSII Flow v7.0 (Advanced)</span><span class="go">✓ Verify ↗</span></a></li>
+          <li><a href="https://www.credly.com/badges/9df3b569-fdbd-4721-b610-9cb0029a3a0e/public_url" target="_blank" rel="noopener"><span class="bd"><img src="https://images.credly.com/size/340x340/images/84a45f3e-3b85-46db-bb3d-2e2cdbf50358/image.png" alt="" width="76" height="76" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('x')"><b>C</b></span><span class="v">Cadence</span><span class="n">Basic Static Timing Analysis v3.0</span><span class="go">✓ Verify ↗</span></a></li>
+          <li><a href="https://www.credly.com/badges/e5762499-e65d-4e5a-904a-0e7fc6a4804a/public_url" target="_blank" rel="noopener"><span class="bd"><img src="https://images.credly.com/size/340x340/images/c1ee4cf1-74d2-44f0-82bf-fedab6b06450/blob" alt="" width="76" height="76" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('x')"><b>C</b></span><span class="v">Cadence</span><span class="n">SystemVerilog for Design &amp; Verification</span><span class="go">✓ Verify ↗</span></a></li>
+          <li><a href="https://www.credly.com/badges/1d9fcf2a-54c4-4a9a-b4c8-488da6aad843/public_url" target="_blank" rel="noopener"><span class="bd"><img src="https://images.credly.com/size/340x340/images/d8a2a571-5b68-487c-87a9-30470d475376/blob" alt="" width="76" height="76" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('x')"><b>S</b></span><span class="v">Synopsys</span><span class="n">PrimeTime: Foundation</span><span class="go">✓ Verify ↗</span></a></li>
+          <li><a href="https://www.credly.com/badges/aef90420-aa41-410e-92ec-ab96c8857df0/public_url" target="_blank" rel="noopener"><span class="bd"><img src="https://images.credly.com/size/340x340/images/dbb9898d-c9f3-49d9-a98f-8cd093632593/image.png" alt="" width="76" height="76" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.classList.add('x')"><b>S</b></span><span class="v">Synopsys</span><span class="n">Fusion Compiler: Design Implementation</span><span class="go">✓ Verify ↗</span></a></li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     05 · CONTACT
+     ================================================================ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-top rv">
+      <div class="sh"><span class="no">05</span><span>Contact</span><span class="rl"></span><span>Pin configuration</span></div>
+      <h2 class="h2">Let's talk about your next tapeout.</h2>
+      <p class="lead">I'm looking for physical design, STA and ASIC backend roles in the US and can start now. Email is the fastest way to reach me.</p>
+    </div>
+
+    <div class="contact">
+      <div class="bw rv" id="bondout">
+        <div class="bw-top"><span><b>GK-2026</b> · decapped · top view</span><span class="grow"></span><span class="live"><i></i>Available now</span></div>
+        <div class="bw-stage">
+          <svg viewBox="0 0 760 480" role="group" aria-label="A chip package with six bond-wired pads. Each pad is a way to contact me.">
+            <defs>
+              <linearGradient id="bwGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9cf8e"/><stop offset=".5" stop-color="#b8924f"/><stop offset="1" stop-color="#8a6a33"/></linearGradient>
+              <linearGradient id="bwBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a2536"/><stop offset="1" stop-color="#0d1523"/></linearGradient>
+              <radialGradient id="bwShine" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#2a3a55" stop-opacity=".55"/><stop offset="1" stop-color="#0b1220" stop-opacity="0"/></radialGradient>
+              <pattern id="bwCells" width="26" height="8" patternUnits="userSpaceOnUse">
+                <rect width="26" height="8" fill="#0d1728"/>
+                <rect x="1" y="1" width="5" height="6" fill="#23405f"/><rect x="7" y="1" width="8" height="6" fill="#1d3552"/><rect x="16" y="1" width="3" height="6" fill="#2b4b6e"/><rect x="20" y="1" width="5" height="6" fill="#1a3049"/>
+              </pattern>
+              <filter id="bwGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <rect x="150" y="36" width="460" height="408" rx="22" fill="url(#bwBody)" stroke="#2a3a52"/>
+            <rect x="166" y="52" width="428" height="376" rx="14" fill="none" stroke="#b08d57" stroke-opacity=".55" stroke-width="1.5"/>
+            <circle cx="188" cy="74" r="6" fill="#0a111c" stroke="#b08d57" stroke-opacity=".6"/>
+            <rect x="212" y="104" width="336" height="272" rx="6" fill="#060b13" stroke="#1d2a3d"/>
+            <rect x="250" y="140" width="260" height="200" rx="3" fill="url(#bwCells)" stroke="#3a4f6e"/>
+            <rect x="250" y="140" width="260" height="200" rx="3" fill="url(#bwShine)"/>
+            <rect x="258" y="148" width="244" height="184" rx="2" fill="none" stroke="#b08d57" stroke-opacity=".35" stroke-dasharray="3 3"/>
+            <text x="498" y="332" text-anchor="end" fill="#6d7f99" font-size="8.5" letter-spacing="1">GK · SKY130</text>
+            <g id="bwPins"></g>
+          </svg>
+          <div class="bw-ro" aria-live="polite"><div class="bw-ro-in" id="bwRo"></div></div>
+        </div>
+        <div class="bw-foot"><span>Hover or tap a pad · the wire carries the signal in</span><span>6 pads · 6 bond wires · 1 engineer</span></div>
+        <p class="bw-print">srigovardhan96@gmail.com · +1 (559) 874-7599 · linkedin.com/in/sri-kondapaturi · github.com/SriKondapaturi</p>
+      </div>
+
+      <div class="card rv" id="formCard">
+        <div class="card-h"><span>Send a message</span><span class="rl"></span></div>
+        <form class="msg" id="msgForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+          <div class="f2">
+            <div class="fld"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Jane Smith"></div>
+            <div class="fld"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required placeholder="jane@company.com"></div>
+          </div>
+          <div class="fld"><label for="f-co">Company <span style="text-transform:none;letter-spacing:0">(optional)</span></label><input id="f-co" name="company" type="text" autocomplete="organization" placeholder="Where you're hiring for"></div>
+          <div class="fld"><label for="f-msg">Message</label><textarea id="f-msg" name="message" required placeholder="The role, the team, or a question about one of the designs."></textarea></div>
+          <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn pri" type="submit">
+            Send message
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
+          </button>
+          <p class="fnote" id="fnote">Goes straight to my inbox.</p>
+        </form>
+        <div class="fsent" role="status">
+          <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="var(--ok)" stroke-width="2" style="margin:0 auto" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+          <h4>Message sent</h4>
+          <p>Thanks. I'll reply from srigovardhan96@gmail.com.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Govardhana Kondapaturi</span>
+    <span>GK-2026 datasheet, Rev 3.0</span>
+    <span class="grow"></span>
+    <span>Hand-built HTML &amp; CSS · set in SF Pro</span>
+    <button type="button" id="printBtn">Print datasheet</button>
+    <a href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<!-- ============ PDF reader ============ -->
+<div class="pdfv" id="pdfv" role="dialog" aria-modal="true" aria-labelledby="pdfvT" hidden>
+  <div class="pdfv-box">
+    <div class="pdfv-bar">
+      <b id="pdfvT">Document</b>
+      <span class="grow"></span>
+      <a class="clink" id="pdfvNew" href="#" target="_blank" rel="noopener">Open in new tab ↗</a>
+      <a class="clink" id="pdfvDl" href="#" download>Download</a>
+      <button class="pdfv-x" type="button" id="pdfvX" aria-label="Close">×</button>
+    </div>
+    <iframe id="pdfvF" title="Document" src="about:blank"></iframe>
+  </div>
+</div>
+
+<!-- ============ command palette ============ -->
+<div class="pal" id="pal" role="dialog" aria-modal="true" aria-label="Jump to a section or action">
+  <div class="pal-box">
+    <div class="pal-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="palQ" type="text" placeholder="Jump to a section, copy email, open a link…" autocomplete="off" spellcheck="false" aria-controls="palList" aria-autocomplete="list">
+      <kbd>esc</kbd>
+    </div>
+    <div class="pal-list" id="palList" role="listbox"></div>
+    <div class="pal-foot"><span>↑↓ move</span><span>↵ select</span><span>esc close</span></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+  <span id="toastT">Copied</span>
+</div>
+
+<script src="assets/js/site.js" defer></script>
+<script src="assets/js/hello.js" defer></script>
+</body>
+</html>
