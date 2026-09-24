@@ -1,8 +1,8 @@
 # SriKondapaturi.github.io
 
-> **Layout note:** every file sits at the top level of this repo (no folders). The page links to files by name only, so keep new files at the top level too.
+> **Layout note:** every file sits at the top level of this repo (no folders). The page links to files by name only, so keep new files at the top level too. CSS and JS are published minified.
 
-Portfolio for Govardhana Kondapaturi, physical design engineer. Hand-written HTML, CSS and JavaScript. No framework, no build step. The only third-party requests are the Credly badge images in Certifications (a letter tile shows if Credly is unreachable). Type is Apple's SF Pro on iPhone, iPad and Mac (via the system font, as Apple's own sites do; SF Pro may not be hosted on the web) and Inter, its closest open match, everywhere else.
+Portfolio for Govardhana Kondapaturi, physical design engineer. © 2026, all rights reserved: see LICENSE. Hand-written HTML, CSS and JavaScript. No framework, no build step. The only third-party requests are the Credly badge images in Certifications (a letter tile shows if Credly is unreachable). Type is Apple's SF Pro on iPhone, iPad and Mac (via the system font, as Apple's own sites do; SF Pro may not be hosted on the web) and Inter, its closest open match, everywhere else.
 
 ```
 index.html                      the page
