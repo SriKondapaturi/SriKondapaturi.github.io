@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>All-digital PLL on SkyWater SKY130 · Govardhana Kondapaturi</title>
+<meta name="description" content="A clock generator built from standard cells, designed solo and sent to a real fab.">
+<link rel="canonical" href="https://srikondapaturi.github.io/adpll.html">
+<meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a111c" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://srikondapaturi.github.io/adpll.html">
+<meta property="og:title" content="All-digital PLL on SkyWater SKY130 · Govardhana Kondapaturi">
+<meta property="og:description" content="A clock generator built from standard cells, designed solo and sent to a real fab.">
+<meta property="og:image" content="https://srikondapaturi.github.io/og-adpll.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://srikondapaturi.github.io/og-adpll.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>
+  document.documentElement.classList.add('js');
+  try{var t=localStorage.getItem('gk-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}
+</script>
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="pp-page">
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+ <defs>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14l3 3 3-3"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path d="M8 10.5V16M8 7.6v.1M11.5 16v-5.5M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6V16"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-pll" viewBox="0 0 24 24"><path d="M3 12c1.5-4 3-4 4.5 0s3 4 4.5 0 3-4 4.5 0 3 4 4.5 0"/><path d="M4 19h16M17 16.5l3 2.5-3 2.5"/></symbol>
+  <symbol id="i-chiplet" viewBox="0 0 24 24"><rect x="3" y="4" width="7" height="7" rx="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5"/><rect x="8.5" y="14" width="7" height="7" rx="1.5"/><path d="M10 7.5h4M6.5 11v3.5h2M17.5 11v3.5h-2"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="4" height="4" rx="1"/><rect x="10" y="4" width="4" height="4" rx="1"/><rect x="16" y="4" width="4" height="4" rx="1"/><rect x="4" y="10" width="4" height="4" rx="1"/><rect x="10" y="10" width="4" height="4" rx="1"/><rect x="16" y="10" width="4" height="4" rx="1"/><rect x="4" y="16" width="4" height="4" rx="1"/><rect x="10" y="16" width="4" height="4" rx="1"/><rect x="16" y="16" width="4" height="4" rx="1"/></symbol>
+  <symbol id="i-chain" viewBox="0 0 24 24"><rect x="3" y="4" width="4" height="4" rx="1"/><rect x="10" y="4" width="4" height="4" rx="1"/><rect x="17" y="4" width="4" height="4" rx="1"/><rect x="17" y="16" width="4" height="4" rx="1"/><rect x="10" y="16" width="4" height="4" rx="1"/><rect x="3" y="16" width="4" height="4" rx="1"/><path d="M7 6h3M14 6h3M19 8v8M17 18h-3M10 18H7"/></symbol>
+ </defs>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="index.html" aria-label="Govardhana Kondapaturi, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" fill="none">
+        <rect x="8.5" y="8.5" width="15" height="15" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="12.5" y="12.5" width="7" height="7" rx="1" fill="var(--cu)"/>
+        <path d="M12 8.5V4M16 8.5V4M20 8.5V4M12 28v-4.5M16 28v-4.5M20 28v-4.5M8.5 12H4M8.5 16H4M8.5 20H4M28 12h-4.5M28 16h-4.5M28 20h-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>G. Kondapaturi <span class="sub">/ PD</span></span>
+    </a>
+    <span class="nstat"><i aria-hidden="true"></i>Available now<span class="nd"> · Sept 2026</span></span>
+    <nav class="links" aria-label="Sections">
+      <a href="index.html#work" aria-current="page">Work</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#research">Research</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button class="nbtn" id="palBtn" type="button" aria-haspopup="dialog" aria-controls="pal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="k-lbl">Jump to</span><span class="menu-lbl">Menu</span><kbd id="kbdHint">⌘K</kbd>
+    </button>
+    <button class="nbtn icon" id="themeBtn" type="button" aria-label="Switch colour theme" title="Switch theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/></svg>
+    </button>
+  </div>
+  <div class="trace" id="trace"></div>
+</header>
+
+<main id="main" class="pp">
+  <header class="pp-head">
+    <div class="wrap">
+      <a class="pp-back" href="index.html#work"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg>All work</a>
+      <div class="pp-kick"><span class="pc-ic"><svg class="ic" aria-hidden="true"><use href="#i-pll"/></svg></span><span>Case study 01 of 04</span></div>
+      <h1 class="pp-h">All-digital PLL on SkyWater SKY130</h1>
+      <div class="pp-meta"><span class="st ok"><span class="pulse"></span>GDSII submitted · Sept 7, 2026</span><span class="role">Sole designer · Aug – Sept 2026</span></div>
+      <section class="kr" aria-label="Key results">
+        <p class="kr-h">Key results</p>
+        <div class="kr-g" style="--n:3"><div class="kr-t"><p class="kr-v"><span data-n="941">941</span></p><p class="kr-l">standard cells</p></div><div class="kr-t"><p class="kr-v"><span data-n="40">40</span><i>MHz</i></p><p class="kr-l">timing closed</p></div><div class="kr-t"><p class="kr-v"><span data-n="15">15</span><i>/15</i></p><p class="kr-l">prechecks, first try</p></div></div>
+      </section>
+    </div>
+  </header>
+  <section class="pp-body">
+    <div class="wrap">
+      <article class="case" id="p-adpll">
+      <div class="viz">
+        <figure class="fig">
+          <div class="fig-tabs" role="tablist">
+            <button type="button" role="tab" data-v="shot" aria-selected="true">Layout</button>
+            <button type="button" role="tab" data-v="arch" aria-selected="false">Architecture</button>
+          </div>
+          <div class="fig-body">
+            <svg class="dg" viewBox="0 0 640 372" role="img" aria-label="ADPLL block diagram: reference into TDC, PI loop filter, ring DCO, divide-by-N feedback, lock detector">
+              <!-- lock detector -->
+              <rect class="bx" x="118" y="24" width="130" height="58" rx="6"/>
+              <text class="t1" x="183" y="50" text-anchor="middle">Lock detect</text>
+              <text class="t2" x="183" y="69" text-anchor="middle">averaging</text>
+              <path class="w" d="M183 150V90"/><path class="ar" d="M183 83l-4 8h8z"/>
+              <path class="w dash" d="M248 53H292"/><text class="tc" x="298" y="57">LOCK</text>
+              <!-- ref -->
+              <rect class="bx" x="8" y="162" width="78" height="56" rx="6"/>
+              <text class="t1" x="47" y="186" text-anchor="middle">REF</text>
+              <text class="t2" x="47" y="205" text-anchor="middle">10 MHz</text>
+              <path class="w" d="M86 190H111"/><path class="ar" d="M118 190l-8-4v8z"/>
+              <!-- TDC -->
+              <rect class="bx" x="118" y="150" width="130" height="80" rx="6"/>
+              <text class="t1" x="183" y="179" text-anchor="middle">TDC</text>
+              <text class="t2" x="183" y="198" text-anchor="middle">Gray counter</text>
+              <text class="t2" x="183" y="215" text-anchor="middle">2-FF sync</text>
+              <path class="w" d="M248 190H273"/><path class="ar" d="M280 190l-8-4v8z"/>
+              <text class="t2" x="264" y="181" text-anchor="middle">Δφ</text>
+              <!-- PI -->
+              <rect class="bx" x="280" y="150" width="130" height="80" rx="6"/>
+              <text class="t1" x="345" y="179" text-anchor="middle">PI filter</text>
+              <text class="t2" x="345" y="198" text-anchor="middle">Kp + Ki</text>
+              <text class="t2" x="345" y="215" text-anchor="middle">accumulator</text>
+              <path class="w" d="M410 190H435"/><path class="ar" d="M442 190l-8-4v8z"/>
+              <!-- DCO -->
+              <rect class="bx hot" x="442" y="150" width="130" height="80" rx="6"/>
+              <text class="t1" x="507" y="179" text-anchor="middle">Ring DCO</text>
+              <text class="t2" x="507" y="198" text-anchor="middle">32 inverters</text>
+              <text class="t2" x="507" y="215" text-anchor="middle">16-tap mux</text>
+              <path class="w cu" d="M572 190H625"/><path class="ar cu" d="M632 190l-8-4v8z"/>
+              <text class="tc" x="604" y="180" text-anchor="middle">f_out</text>
+              <!-- feedback -->
+              <path class="w" d="M604 190V320H417"/><path class="ar" d="M410 320l8-4v8z"/>
+              <rect class="bx" x="280" y="290" width="130" height="60" rx="6"/>
+              <text class="t1" x="345" y="316" text-anchor="middle">÷ N</text>
+              <text class="t2" x="345" y="336" text-anchor="middle">N = 1 – 63</text>
+              <path class="w" d="M280 320H183V237"/><path class="ar" d="M183 230l-4 8h8z"/>
+              <text class="t2" x="232" y="311" text-anchor="middle">f_fb</text>
+              <text class="t2" x="594" y="262" text-anchor="end">N × f_ref</text>
+              <!-- signal travelling the loop -->
+              <circle class="blip" r="4.5"><animateMotion dur="4.6s" repeatCount="indefinite" path="M248 190H604V320H183V230"/></circle>
+              <circle class="blip" r="4.5" opacity=".45"><animateMotion dur="4.6s" begin="-2.3s" repeatCount="indefinite" path="M248 190H604V320H183V230"/></circle>
+              <circle class="blip" r="3.2"><animateMotion dur="1.15s" repeatCount="indefinite" path="M86 190H118"/></circle>
+            </svg>
+          </div>
+          <figcaption><b>Fig. 1</b><span>ADPLL loop. The TDC measures phase error against the 10 MHz reference, the PI filter turns it into a control word, and the DCO speeds up or slows down until ÷N of its output matches.</span></figcaption>
+        </figure>
+      </div>
+      <div>
+        <p class="what">A phase-locked loop turns a slow, clean reference clock into a faster one that stays locked to it. An all-digital PLL replaces the analog charge pump and filter with logic, so the whole thing can be built from standard cells and pushed through a normal digital flow.</p>
+        <ul class="did">
+          <li>Designed the loop in synthesizable Verilog: <b>counter-based time-to-digital phase detector</b>, digital PI loop filter, standard-cell ring-oscillator DCO with a tap mux, programmable ÷N feedback, and an averaging lock detector.</li>
+          <li>Hardened through OpenLane/OpenROAD on SKY130 and <b>closed timing at 40 MHz with sub-10% IR drop</b>. DRC, LVS and antenna clean in Magic and KLayout; all 15 Tiny Tapeout prechecks passed on the first attempt.</li>
+          <li>Found and fixed an out-of-range DCO tap index that left half the taps undefined, so the ring could not oscillate at its operating point. <b>Resized the chain from the tap count</b> to 32 inverters and quantized the behavioural model to the same 16 taps.</li>
+          <li>Verified in cocotb with Icarus Verilog: locks at about <b>39.81 MHz for N = 4</b> from the 10 MHz reference, in roughly 650 µs of simulated time.</li>
+        </ul>
+        <table class="spec">
+          <caption>Specifications</caption>
+          <tr><th>Process</th><td>SkyWater SKY130 (sky130A), Tiny Tapeout SKY26c shuttle</td></tr>
+          <tr><th>Flow</th><td>OpenLane / OpenROAD (LibreLane), run in GitHub Actions</td></tr>
+          <tr><th>Footprint</th><td>2 tiles (1 × 2), 31.7% utilization</td></tr>
+          <tr><th>Netlist</th><td>941 standard cells, 142 flip-flops, 18,711 µm of wire</td></tr>
+          <tr><th>Timing</th><td>Closed at 40 MHz, sub-10% IR drop</td></tr>
+          <tr><th>Output</th><td>N × 10 MHz, N = 1 – 63 set on <span class="mono">ui_in[5:0]</span></td></tr>
+          <tr><th>Silicon</th><td>Expected May 2027</td></tr>
+        </table>
+        <div class="clinks">
+          <a class="clink" href="https://srikondapaturi.github.io/tt-um-govardhana-adpll/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8l-9-5-9 5v8l9 5z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg>
+            Explore the layout in 3D
+          </a>
+          <a class="clink" href="https://github.com/SriKondapaturi/tt-um-govardhana-adpll" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>
+            Source on GitHub
+          </a>
+        </div>
+      </div>
+    </article>
+    </div>
+  </section>
+  <nav class="pp-next wrap" aria-label="More case studies"><a class="pp-nx" href="dft.html"><span class="k">Previous</span><span class="pc-ic"><svg class="ic" aria-hidden="true"><use href="#i-chain"/></svg></span><b>DFT, BIST and ATPG flow with Synopsys TetraMAX</b></a><a class="pp-nx" href="soc.html"><span class="k">Next</span><span class="pc-ic"><svg class="ic" aria-hidden="true"><use href="#i-chiplet"/></svg></span><b>Multi-chiplet SoC with DVFS, CDC and hierarchical power management</b></a></nav>
+</main>
+
+<div class="dock" id="dock" aria-label="Quick contact">
+  <a class="dk pri" href="Govardhana_Kondapaturi_Resume.pdf" download><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg><span>Resume</span></a>
+  <a class="dk" href="mailto:srigovardhan96@gmail.com"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg><span>Email</span></a>
+  <a class="dk" href="https://www.linkedin.com/in/sri-kondapaturi/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-in"/></svg><span>LinkedIn</span></a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Govardhana Kondapaturi. All rights reserved.</span>
+    <span class="grow"></span>
+    <button type="button" id="printBtn">Print datasheet</button>
+    <a href="#main">Back to top ↑</a>
+  </div>
+</footer>
+
+<!-- ============ PDF reader ============ -->
+<div class="pdfv" id="pdfv" role="dialog" aria-modal="true" aria-labelledby="pdfvT" hidden>
+  <div class="pdfv-box">
+    <div class="pdfv-bar">
+      <b id="pdfvT">Document</b>
+      <span class="grow"></span>
+      <a class="clink" id="pdfvNew" href="#" target="_blank" rel="noopener">Open in new tab ↗</a>
+      <a class="clink" id="pdfvDl" href="#" download>Download</a>
+      <button class="pdfv-x" type="button" id="pdfvX" aria-label="Close">×</button>
+    </div>
+    <iframe id="pdfvF" title="Document" src="about:blank"></iframe>
+  </div>
+</div>
+
+<!-- ============ command palette ============ -->
+<div class="pal" id="pal" role="dialog" aria-modal="true" aria-label="Jump to a section or action">
+  <div class="pal-box">
+    <div class="pal-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="palQ" type="text" placeholder="Jump to a section, copy email, open a link…" autocomplete="off" spellcheck="false" aria-controls="palList" aria-autocomplete="list">
+      <kbd>esc</kbd>
+    </div>
+    <div class="pal-list" id="palList" role="listbox"></div>
+    <div class="pal-foot"><span>↑↓ move</span><span>↵ select</span><span>esc close</span></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+  <span id="toastT">Copied</span>
+</div>
+
+<script src="site.js" defer></script>
+</body>
+</html>

@@ -2,10 +2,12 @@
 
 > **Layout note:** every file sits at the top level of this repo (no folders). The page links to files by name only, so keep new files at the top level too. CSS and JS are published minified.
 
-Portfolio for Govardhana Kondapaturi, physical design engineer. © 2026, all rights reserved: see LICENSE. Hand-written HTML, CSS and JavaScript. No framework, no build step. The only third-party requests are the Credly badge images in Certifications (a letter tile shows if Credly is unreachable). Type is Apple's SF Pro on iPhone, iPad and Mac (via the system font, as Apple's own sites do; SF Pro may not be hosted on the web) and Inter, its closest open match, everywhere else.
+Portfolio for Govardhana Kondapaturi, physical design engineer. © 2026, all rights reserved: see LICENSE. Hand-written HTML, CSS and JavaScript. No framework, no build step. The page makes no third-party requests: the five Cadence and Synopsys badge images in Certifications are stored in the repo (`badge-*.png`), and each links to its public Credly record for verification. Type is Apple's SF Pro on iPhone, iPad and Mac (via the system font, as Apple's own sites do; SF Pro may not be hosted on the web) and Inter, its closest open match, everywhere else.
 
 ```
-index.html                      the page
+index.html                      home page: opener, intro, project grid, skills, about, research, contact
+adpll.html soc.html            one case-study page per project, opened from the project grid
+systolic.html dft.html
 404.html                        "unconnected net" error page (GitHub Pages serves it automatically)
 site.css             all styling: navy & gold light and dark themes, print styles
 hello.css            the "Off the clock" opener and its film strip
@@ -26,10 +28,10 @@ Drop a file at the exact path below and push. The page detects it on load.
 | Path | What happens |
 |---|---|
 | `headshot.jpg` | Replaces the "GK" panel in About. Portrait, about 4:5, 900×1125 px or larger. |
-| `adpll-layout.png` | ADPLL figure gains a **Layout / Architecture** toggle and opens on Layout. A KLayout or 3D-viewer screenshot works well. |
+| `adpll-layout.png` | ADPLL figure gains a **Layout / Architecture** toggle. Also add `data-shot="adpll-layout.png"` to the `<figure class="fig">` in `adpll.html`. A KLayout or 3D-viewer screenshot works well. |
 | `soc-layout.png` | Same, for the chiplet SoC (Innovus floorplan or routed view). |
 | `systolic-layout.png` | Same, for the systolic accelerator. |
-| `dft-layout.png` | Same, for DFT (a TetraMAX coverage report screenshot is fine; the tab reads "Screenshot"). |
+| `dft-layout.png` | Same, for DFT in `dft.html` (a TetraMAX coverage report screenshot is fine). |
 
 Keep screenshots around 1200–1600 px wide and under ~400 KB. `squoosh.app` shrinks them without visible loss.
 
@@ -40,6 +42,7 @@ The page opens with "Hello, I'm Sri." and a film strip of personal photos, then 
 - **Change the text:** edit the `00 · HELLO` block at the top of `index.html`.
 - **Add a photo:** save it in `` (about 1,000–1,400 px on the long side, under ~250 KB), then copy one `<button class="fr">…</button>` line in the film strip and change the file name, `alt` text, frame number and caption. Keep `width` and `height` matching the photo.
 - **Remove a photo:** delete its `<button class="fr">` line.
+- **The small photo inside "Hello, I'm Sri.":** `sri-face.jpg` (320×400, head and shoulders). Clicking it opens `sri-face-full.jpg`, the same crop at 720×900. Swap either file, keeping the 4:5 shape.
 - Phone photos can carry GPS location. Strip it before adding (on a Mac: Preview → Tools → Show Inspector → GPS → Remove Location Info).
 
 ## Contact form
@@ -75,7 +78,7 @@ To update later: `git add . && git commit -m "…" && git push`.
 ## Editing content
 
 - **Text** lives in `index.html`, one commented block per section (`<!-- 01 · WORK -->` and so on).
-- **Skill ratings** live in the Skills section of `index.html`. To change a rating, edit `data-lv="1"`…`"5"` on that skill; the squares and the Expert/Advanced/Proficient/Familiar label update on their own. `data-p` lists the projects that skill was used in (`adpll soc npu dft`), which drives the "Used in" filter and the coloured dots.
+- **Skill ratings** live in the Skills section of `index.html`. To change a rating, edit `data-lv="1"`…`"5"` on that skill; the squares and the Expert/Advanced/Proficient/Familiar label update on their own. `data-p` lists the projects that skill was used in (`adpll soc npu dft`), which drives the "Used in" filter and the coloured dots. Each group shows its three highest-rated skills first (ties keep the order in the file), and its corner reads "Top 3 of 6". Visitors switch with the "Show: Top 18 | All 36" control in the bar above the cards, or the pill that stays at the bottom of the screen while the cards are in view. Picking a "Used in" filter shows everything. To show more per group, change `TOP = 3` in `initSkillPreview` in `site.js`.
 - **Colours**: the `:root` block at the top of `site.css`. `--cu` is the antique-gold accent; change it and every accent follows.
 - **Headline numbers** in the band under the hero: edit the `data-to` attribute and the fallback text together.
 
@@ -86,3 +89,11 @@ To update later: `git add . && git commit -m "…" && git push`.
 - **Reduced motion**: visitors who turn off animation in their OS get the finished die and static figures.
 - **Contact** is a bond-wired chip: hover or tap a pad and its wire lights up while the die shows that contact with action buttons. Contact details live in `CONTACT_PINS` in `site.js`.
 - **Structured data** (schema.org `Person`) helps Google show your name, title and profiles properly.
+
+## Type sizes
+
+One scale, used everywhere: 72/44 px for the two display headings, 44/28 px section titles, 28/20 px card and page titles, 20/16 px lead text, 16 px body, 14 px secondary text, 12 px labels. The pairs are the desktop/phone ends of a fluid size. Nothing on the site is smaller than 12 px.
+
+## Where each fact lives
+
+Each number appears once on the home page (on its project card) and in full on that project's page. The hero states the role, the cards carry the proof, and the About section carries the story. Keep it that way when adding content.

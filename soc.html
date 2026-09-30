@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Multi-chiplet SoC with DVFS, CDC and hierarchical power management · Govardhana Kondapaturi</title>
+<meta name="description" content="Three chiplets on a network-on-chip, carried from UPF power intent to GDSII.">
+<link rel="canonical" href="https://srikondapaturi.github.io/soc.html">
+<meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a111c" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://srikondapaturi.github.io/soc.html">
+<meta property="og:title" content="Multi-chiplet SoC with DVFS, CDC and hierarchical power management · Govardhana Kondapaturi">
+<meta property="og:description" content="Three chiplets on a network-on-chip, carried from UPF power intent to GDSII.">
+<meta property="og:image" content="https://srikondapaturi.github.io/og-soc.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://srikondapaturi.github.io/og-soc.png">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>
+  document.documentElement.classList.add('js');
+  try{var t=localStorage.getItem('gk-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}
+</script>
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="pp-page">
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+ <defs>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14l3 3 3-3"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path d="M8 10.5V16M8 7.6v.1M11.5 16v-5.5M11.5 13c0-1.6 1-2.6 2.4-2.6s2.1 1 2.1 2.6V16"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-pll" viewBox="0 0 24 24"><path d="M3 12c1.5-4 3-4 4.5 0s3 4 4.5 0 3-4 4.5 0 3 4 4.5 0"/><path d="M4 19h16M17 16.5l3 2.5-3 2.5"/></symbol>
+  <symbol id="i-chiplet" viewBox="0 0 24 24"><rect x="3" y="4" width="7" height="7" rx="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5"/><rect x="8.5" y="14" width="7" height="7" rx="1.5"/><path d="M10 7.5h4M6.5 11v3.5h2M17.5 11v3.5h-2"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="4" height="4" rx="1"/><rect x="10" y="4" width="4" height="4" rx="1"/><rect x="16" y="4" width="4" height="4" rx="1"/><rect x="4" y="10" width="4" height="4" rx="1"/><rect x="10" y="10" width="4" height="4" rx="1"/><rect x="16" y="10" width="4" height="4" rx="1"/><rect x="4" y="16" width="4" height="4" rx="1"/><rect x="10" y="16" width="4" height="4" rx="1"/><rect x="16" y="16" width="4" height="4" rx="1"/></symbol>
+  <symbol id="i-chain" viewBox="0 0 24 24"><rect x="3" y="4" width="4" height="4" rx="1"/><rect x="10" y="4" width="4" height="4" rx="1"/><rect x="17" y="4" width="4" height="4" rx="1"/><rect x="17" y="16" width="4" height="4" rx="1"/><rect x="10" y="16" width="4" height="4" rx="1"/><rect x="3" y="16" width="4" height="4" rx="1"/><path d="M7 6h3M14 6h3M19 8v8M17 18h-3M10 18H7"/></symbol>
+ </defs>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="index.html" aria-label="Govardhana Kondapaturi, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true" fill="none">
+        <rect x="8.5" y="8.5" width="15" height="15" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="12.5" y="12.5" width="7" height="7" rx="1" fill="var(--cu)"/>
+        <path d="M12 8.5V4M16 8.5V4M20 8.5V4M12 28v-4.5M16 28v-4.5M20 28v-4.5M8.5 12H4M8.5 16H4M8.5 20H4M28 12h-4.5M28 16h-4.5M28 20h-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>G. Kondapaturi <span class="sub">/ PD</span></span>
+    </a>
+    <span class="nstat"><i aria-hidden="true"></i>Available now<span class="nd"> · Sept 2026</span></span>
+    <nav class="links" aria-label="Sections">
+      <a href="index.html#work" aria-current="page">Work</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#research">Research</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <button class="nbtn" id="palBtn" type="button" aria-haspopup="dialog" aria-controls="pal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="k-lbl">Jump to</span><span class="menu-lbl">Menu</span><kbd id="kbdHint">⌘K</kbd>
+    </button>
+    <button class="nbtn icon" id="themeBtn" type="button" aria-label="Switch colour theme" title="Switch theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor"/></svg>
+    </button>
+  </div>
+  <div class="trace" id="trace"></div>
+</header>
+
+<main id="main" class="pp">
+  <header class="pp-head">
+    <div class="wrap">
+      <a class="pp-back" href="index.html#work"><svg class="ic" aria-hidden="true"><use href="#i-back"/></svg>All work</a>
+      <div class="pp-kick"><span class="pc-ic"><svg class="ic" aria-hidden="true"><use href="#i-chiplet"/></svg></span><span>Case study 02 of 04</span></div>
+      <h1 class="pp-h">Multi-chiplet SoC with DVFS, CDC and hierarchical power management</h1>
+      <div class="pp-meta"><span class="st cu">Paper submitted · IEEE LASCAS 2027</span><span class="role">Team lead · Jan – May 2025</span></div>
+      <section class="kr" aria-label="Key results">
+        <p class="kr-h">Key results</p>
+        <div class="kr-g" style="--n:3"><div class="kr-t"><p class="kr-v"><span data-n="513">513</span><i>MHz</i></p><p class="kr-l">MCMM signoff</p></div><div class="kr-t"><p class="kr-v"><span data-n="12">12</span></p><p class="kr-l">async clock domains</p></div><div class="kr-t"><p class="kr-v"><span data-n="100">100</span><i>%</i></p><p class="kr-l">CDC/RDC closure</p></div></div>
+      </section>
+    </div>
+  </header>
+  <section class="pp-body">
+    <div class="wrap">
+      <article class="case" id="p-soc">
+      <div class="viz">
+        <figure class="fig" data-shot="soc-layout.jpg" data-shot-alt="Routed chiplet SoC die in Cadence Innovus, four power domains" data-shot-cap="Routed die in Cadence Innovus, from the LASCAS paper: the always-on PD_TOP region, the switchable NPU domain with its level shifters and isolation at the edge, and M8 power stripes at a 40 µm pitch.">
+          <div class="fig-tabs" role="tablist">
+            <button type="button" role="tab" data-v="shot" aria-selected="true">Layout</button>
+            <button type="button" role="tab" data-v="arch" aria-selected="false">Architecture</button>
+          </div>
+          <div class="fig-body">
+            <svg class="dg" viewBox="0 0 640 380" role="img" aria-label="Three chiplets, each a separate supply domain with its own clock domains, connected by a network-on-chip with level shifters and isolation at each crossing">
+              <text class="t3" x="320" y="30" text-anchor="middle">180K gates · 12 async clock domains · 513 MHz</text>
+              <!-- chiplet 0 -->
+              <rect x="24" y="52" width="168" height="252" rx="8" fill="var(--blue-soft)" stroke="var(--blue)" stroke-width="1.3"/>
+              <text class="t3" x="36" y="72">Chiplet 0 · PD0</text>
+              <!-- chiplet 1 -->
+              <rect x="236" y="52" width="168" height="252" rx="8" fill="var(--cu-soft)" stroke="var(--cu)" stroke-width="1.3"/>
+              <text class="t3" x="248" y="72">Chiplet 1 · PD1</text>
+              <!-- chiplet 2 -->
+              <rect x="448" y="52" width="168" height="252" rx="8" fill="var(--ok-soft)" stroke="var(--ok)" stroke-width="1.3"/>
+              <text class="t3" x="460" y="72">Chiplet 2 · PD2</text>
+              <g id="socTiles"></g>
+              <!-- NoC links -->
+              <path class="w cu flowline" d="M130 274H298"/>
+              <path class="w cu flowline" d="M342 274H510"/>
+              <rect x="199" y="262" width="30" height="24" rx="4" fill="var(--card)" stroke="var(--ink-2)"/>
+              <text class="t2" x="214" y="278.5" text-anchor="middle" fill="var(--ink)">LS</text>
+              <rect x="411" y="262" width="30" height="24" rx="4" fill="var(--card)" stroke="var(--ink-2)"/>
+              <text class="t2" x="426" y="278.5" text-anchor="middle" fill="var(--ink)">LS</text>
+              <!-- legend -->
+              <g transform="translate(24 334)">
+                <rect width="12" height="12" rx="2" fill="var(--blue-soft)" stroke="var(--blue)"/><rect x="17" width="12" height="12" rx="2" fill="var(--cu-soft)" stroke="var(--cu)"/><rect x="34" width="12" height="12" rx="2" fill="var(--ok-soft)" stroke="var(--ok)"/>
+                <text class="t2" x="54" y="10.5">supply domains</text>
+                <path class="w cu" d="M184 6H210"/><text class="t2" x="217" y="10.5">NoC link</text>
+                <rect x="296" y="-3" width="24" height="18" rx="3" fill="var(--card)" stroke="var(--ink-2)"/><text class="t2" x="308" y="10.5" text-anchor="middle" fill="var(--ink)">LS</text>
+                <text class="t2" x="327" y="10.5">level shift + isolation</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption><b>Fig. 2</b><span>Three chiplets on a network-on-chip spanning multiple supply domains, with level shifting and isolation wherever a signal crosses between them. Schematic, not to scale; how supply and clock domains map onto chiplets is illustrative.</span></figcaption>
+        </figure>
+      </div>
+      <div>
+        <p class="what">A chiplet SoC splits one large system into smaller dies that talk over an on-chip network. It is how modern processors scale, and it makes physical design harder: each chiplet brings its own clocks, supplies and timing budget, and every crossing between them has to be made safe.</p>
+        <ul class="did">
+          <li>Owned the full <b>Cadence Innovus</b> flow on a 180K-gate SoC with 12 asynchronous clock domains: floorplanning, power planning, structured placement, customized CTS and routing.</li>
+          <li>Closed <b>513 MHz with multi-mode, multi-corner signoff</b> in PrimeTime, scripting the timing and IR-drop ECOs in TCL across corners.</li>
+          <li>Reached <b>100% structural CDC/RDC closure</b> in SpyGlass and JasperGold, with clean logic-equivalence signoff in Conformal.</li>
+          <li>Signed off physical verification clean in <b>Calibre DRC/LVS</b> and analysed IR drop and electromigration in RedHawk-SC.</li>
+        </ul>
+        <table class="spec">
+          <caption>Specifications</caption>
+          <tr><th>Process</th><td>Nangate 45 nm</td></tr>
+          <tr><th>Size</th><td>180K gates, three chiplets on a NoC</td></tr>
+          <tr><th>Clocking</th><td>12 asynchronous domains</td></tr>
+          <tr><th>Power</th><td>Multi-supply UPF, DVFS, hierarchical power management</td></tr>
+          <tr><th>Timing</th><td>513 MHz, MCMM signoff in PrimeTime</td></tr>
+          <tr><th>Signoff</th><td>CDC/RDC 100% · LEC clean · DRC/LVS clean · IR/EM analysed</td></tr>
+        </table>
+        <div class="doc" data-pdf="Kondapaturi_LASCAS2027_UPF_MultiVoltage_Chiplet_SoC.pdf" data-title="A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII">
+          <button class="doc-thumb" type="button" data-view aria-label="Read the paper: A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII">
+            <img src="lascas-p1.webp" alt="" loading="lazy" decoding="async" width="520" height="673">
+            <span class="doc-open" aria-hidden="true">Read</span>
+          </button>
+          <div class="doc-meta">
+            <b class="doc-t">A UPF-Driven Multi-Voltage Three-Chiplet SoC with DVFS, Carried from RTL to GDSII</b>
+            <span class="doc-s">PDF · 5 pages</span>
+            <div class="doc-act">
+              <button class="clink" type="button" data-view>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                Read
+              </button>
+              <a class="clink" href="Kondapaturi_LASCAS2027_UPF_MultiVoltage_Chiplet_SoC.pdf" download>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+                Download
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    </div>
+  </section>
+  <nav class="pp-next wrap" aria-label="More case studies"><a class="pp-nx" href="adpll.html"><span class="k">Previous</span><span class="pc-ic"><svg class="ic" aria-hidden="true"><use href="#i-pll"/></svg></span><b>All-digital PLL on SkyWater SKY130</b></a><a class="pp-nx" href="systolic.html"><span class="k">Next</span><span class="pc-ic"><svg class="ic" aria-hidden="true"><use href="#i-grid"/></svg></span><b>8 × 8 systolic neural-network accelerator</b></a></nav>
+</main>
+
+<div class="dock" id="dock" aria-label="Quick contact">
+  <a class="dk pri" href="Govardhana_Kondapaturi_Resume.pdf" download><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg><span>Resume</span></a>
+  <a class="dk" href="mailto:srigovardhan96@gmail.com"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg><span>Email</span></a>
+  <a class="dk" href="https://www.linkedin.com/in/sri-kondapaturi/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-in"/></svg><span>LinkedIn</span></a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Govardhana Kondapaturi. All rights reserved.</span>
+    <span class="grow"></span>
+    <button type="button" id="printBtn">Print datasheet</button>
+    <a href="#main">Back to top ↑</a>
+  </div>
+</footer>
+
+<!-- ============ PDF reader ============ -->
+<div class="pdfv" id="pdfv" role="dialog" aria-modal="true" aria-labelledby="pdfvT" hidden>
+  <div class="pdfv-box">
+    <div class="pdfv-bar">
+      <b id="pdfvT">Document</b>
+      <span class="grow"></span>
+      <a class="clink" id="pdfvNew" href="#" target="_blank" rel="noopener">Open in new tab ↗</a>
+      <a class="clink" id="pdfvDl" href="#" download>Download</a>
+      <button class="pdfv-x" type="button" id="pdfvX" aria-label="Close">×</button>
+    </div>
+    <iframe id="pdfvF" title="Document" src="about:blank"></iframe>
+  </div>
+</div>
+
+<!-- ============ command palette ============ -->
+<div class="pal" id="pal" role="dialog" aria-modal="true" aria-label="Jump to a section or action">
+  <div class="pal-box">
+    <div class="pal-in">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="palQ" type="text" placeholder="Jump to a section, copy email, open a link…" autocomplete="off" spellcheck="false" aria-controls="palList" aria-autocomplete="list">
+      <kbd>esc</kbd>
+    </div>
+    <div class="pal-list" id="palList" role="listbox"></div>
+    <div class="pal-foot"><span>↑↓ move</span><span>↵ select</span><span>esc close</span></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>
+  <span id="toastT">Copied</span>
+</div>
+
+<script src="site.js" defer></script>
+</body>
+</html>
