@@ -24,14 +24,15 @@
   document.documentElement.classList.add('js');
   try{var t=localStorage.getItem('gk-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}
 </script>
-<link rel="stylesheet" href="site.css">
-<link rel="stylesheet" href="hello.css">
+<link rel="stylesheet" href="site.css?v=20261013">
+<link rel="stylesheet" href="hello.css?v=20261013">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
   "@type":"Person",
   "name":"Govardhana Kondapaturi",
   "jobTitle":"Physical Design Engineer",
+  "worksFor":{"@type":"Organization","name":"Astera Labs"},
   "url":"https://srikondapaturi.github.io/",
   "email":"mailto:srigovardhan96@gmail.com",
   "address":{"@type":"PostalAddress","addressLocality":"Fresno","addressRegion":"CA","addressCountry":"US"},
@@ -71,9 +72,10 @@
       </svg>
       <span>G. Kondapaturi <span class="sub">/ PD</span></span>
     </a>
-    <span class="nstat"><i aria-hidden="true"></i>Available now<span class="nd"> · Sept 2026</span></span>
+    <span class="nstat"><i aria-hidden="true"></i>Open to new roles</span>
     <nav class="links" aria-label="Sections">
-      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#work">Projects</a>
       <a href="#skills">Skills</a>
       <a href="#about">About</a>
       <a href="#research">Research</a>
@@ -144,22 +146,22 @@
     <div>
       <p class="eyebrow hl-eyebrow">On the clock</p>
       <h1 class="name"><span>Govardhana</span><span>Kondapaturi</span></h1>
+      <p class="nowrole">Physical Design Engineer at <b>Astera Labs</b><i>·</i>previously <b>AMD</b></p>
       <p class="caps" aria-label="What I do">Floorplan<i>·</i>Power grid<i>·</i>Clock tree<i>·</i>Routing<i>·</i><b>Signoff timing</b></p>
       <div class="now" aria-labelledby="now-h">
-        <p class="now-h" id="now-h"><span class="pulse"></span>Right now</p>
+        <p class="now-h" id="now-h"><span class="pulse"></span>Lately</p>
         <dl>
-          <div><dt>Building</dt><dd>A 5-stage <b>RV32IM RISC-V core</b> with a custom matrix-instruction extension</dd></div>
           <div><dt>Attended</dt><dd><b>SNUG Silicon Valley 2026</b>, Synopsys&rsquo; user conference in Santa Clara, where design teams share what actually worked in their flows</dd></div>
-          <div><dt>Reading</dt><dd>How <b>gate-all-around nanosheets</b> replace FinFETs, and how <b>backside power delivery</b> moves the power grid under the transistors, changing floorplans and IR-drop budgets</dd></div>
+          <div><dt>Following</dt><dd>How <b>gate-all-around nanosheets</b> replace FinFETs, and how <b>backside power delivery</b> moves the power grid under the transistors, changing floorplans and IR-drop budgets</dd></div>
         </dl>
       </div>
 
       <div class="cta">
-        <a class="btn pri" href="#work">
-          Selected work
+        <a class="btn pri" href="#experience">
+          Experience
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
         </a>
-        <a class="btn" href="Govardhana_Kondapaturi_Resume.pdf" download>
+        <a class="btn" href="Govardhana_Kondapaturi_Resume.pdf?v=20261013" download>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14l3 3 3-3"/></svg>
           Resume
         </a>
@@ -206,12 +208,56 @@
 <!-- ================================================================
      01 · WORK
      ================================================================ -->
+<section id="experience" class="xp">
+  <div class="wrap">
+    <div class="sec-top rv">
+      <div class="sh"><span class="no">01</span><span>Experience</span><span class="rl"></span></div>
+      <h2 class="h2">Physical design in industry, from AMD to Astera Labs.</h2>
+      <p class="lead">Company designs are confidential, so this describes the work, not the chips. The projects below are my own designs, shown in full.</p>
+    </div>
+    <ol class="xp-list">
+      <li class="xp-i rv">
+        <div class="xp-when"><span>Aug 2025 – Present</span><span class="st ok"><span class="pulse"></span>Current</span></div>
+        <div class="xp-body">
+          <h3><span class="xp-co">Astera Labs</span><span class="xp-role">Physical Design Engineer</span></h3>
+          <p class="xp-meta">San Jose, CA, USA · 7 nm high-speed connectivity silicon</p>
+          <ul>
+            <li>Physical design in <b>Cadence Innovus</b>: floorplanning, power planning, placement, CTS and routing.</li>
+            <li>Timing analysis in <b>Synopsys PrimeTime</b>, resolving setup and hold violations across PVT corners.</li>
+            <li>Investigated placement congestion and routing issues affecting critical timing paths.</li>
+            <li>Cell sizing, buffering and ECO changes to close timing violations and improve margins.</li>
+            <li>Reviewed IR drop, electromigration, DRC, LVS and antenna checks during physical signoff.</li>
+            <li>TCL and Python scripts to analyze timing reports and automate routine implementation checks.</li>
+          </ul>
+          <p class="xp-tags"><span>Innovus</span><span>PrimeTime</span><span>CTS</span><span>ECO</span><span>IR/EM</span><span>TCL</span><span>Python</span></p>
+        </div>
+      </li>
+      <li class="xp-i rv">
+        <div class="xp-when"><span>Jun 2022 – Jul 2024</span><span class="xp-split">Intern Jun 2022 – Jun 2023<br>Full-time Jul 2023 – Jul 2024</span></div>
+        <div class="xp-body">
+          <h3><span class="xp-co">AMD</span><span class="xp-role">Silicon Design Engineer</span></h3>
+          <p class="xp-meta">Bengaluru, Karnataka, India · intern, then full-time</p>
+          <ul>
+            <li>ASIC physical implementation: floorplan review, placement and routing analysis.</li>
+            <li>Found congestion hotspots and areas that needed implementation changes.</li>
+            <li>Analyzed static timing reports to find critical paths and the causes of violations.</li>
+            <li>Reviewed clock-tree skew, latency and transition, and how extracted parasitics shifted post-route delays.</li>
+            <li>Checked DRC, LVS and antenna reports and worked on resolving physical-verification violations.</li>
+            <li>TCL scripts to extract timing metrics, organize implementation reports and simplify recurring checks.</li>
+          </ul>
+          <p class="xp-tags"><span>STA</span><span>Placement</span><span>Routing</span><span>CTS</span><span>DRC/LVS</span><span>TCL</span></p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
 <section id="work">
   <div class="wrap">
     <div class="sec-top rv">
-      <div class="sh"><span class="no">01</span><span>Selected work</span><span class="rl"></span></div>
+      <div class="sh"><span class="no">02</span><span>Projects</span><span class="rl"></span></div>
       <h2 class="h2">Four designs carried from RTL to signoff, one of them to a&nbsp;fab.</h2>
-      <p class="lead">Each is a design I owned end to end. Open a card for the full case study, figures and documents.</p>
+      <p class="lead">My own designs, each owned end to end. Open a card for the full case study, figures and documents.</p>
     </div>
     <div class="cards">
       <a class="pcard rv" href="adpll.html" id="card-adpll">
@@ -304,9 +350,9 @@
 <section id="skills" class="alt">
   <div class="wrap">
     <div class="sec-top rv">
-      <div class="sh"><span class="no">02</span><span>Skills</span><span class="rl"></span></div>
+      <div class="sh"><span class="no">03</span><span>Skills</span><span class="rl"></span></div>
       <h2 class="h2">What I can take on from day one.</h2>
-      <p class="lead">Rated the way hiring portals ask, with my strongest skills in each area up front. Every rating is backed by a project on this page; the coloured dots show which.</p>
+      <p class="lead">Rated the way hiring portals ask, with my strongest skills in each area up front. Every rating is backed by industry work or a project on this page; the coloured dots show which.</p>
     </div>
 
     <div class="sk-bar rv">
@@ -323,12 +369,13 @@
         <button class="fchip" type="button" data-f="soc" aria-pressed="false"><i class="p-soc"></i>SoC</button>
         <button class="fchip" type="button" data-f="npu" aria-pressed="false"><i class="p-npu"></i>Systolic</button>
         <button class="fchip" type="button" data-f="dft" aria-pressed="false"><i class="p-dft"></i>DFT</button>
+        <button class="fchip" type="button" data-f="work" aria-pressed="false"><i class="p-work"></i>Industry</button>
       </div>
     </div>
 
     <!-- To change a rating, edit data-lv="1..5" on that skill. The dots and the label follow automatically. -->
     <div class="skgrid" id="skgrid">
-      <article class="skc" data-g="pi"><header><h3>Physical implementation</h3><span class="cnt">6</span></header><ul><li class="sk" data-p="soc adpll npu"><div class="sk-top"><span class="sk-n">Floorplanning &amp; macro <span class="nw">placement <span class="tg" role="img" aria-label="Used in SoC, ADPLL, Systolic"><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc npu"><div class="sk-top"><span class="sk-n">Power planning &amp; grid <span class="nw">sizing <span class="tg" role="img" aria-label="Used in SoC, Systolic"><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc npu"><div class="sk-top"><span class="sk-n">Placement &amp; congestion <span class="nw">analysis <span class="tg" role="img" aria-label="Used in SoC, Systolic"><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc adpll npu"><div class="sk-top"><span class="sk-n">Clock tree <span class="nw">synthesis <span class="tg" role="img" aria-label="Used in SoC, ADPLL, Systolic"><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc adpll npu"><div class="sk-top"><span class="sk-n">Routing &amp; DRC <span class="nw">fixing <span class="tg" role="img" aria-label="Used in SoC, ADPLL, Systolic"><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Timing &amp; IR-drop <span class="nw">ECOs <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article><article class="skc" data-g="sta"><header><h3>Timing & constraints</h3><span class="cnt">3</span></header><ul><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">STA: setup / hold, <span class="nw">MCMM <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">SDC constraint <span class="nw">development <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">CDC / RDC <span class="nw">analysis <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article><article class="skc" data-g="lp"><header><h3>Low-power design</h3><span class="cnt">4</span></header><ul><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">UPF / IEEE 1801 power <span class="nw">intent <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="5" role="img" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Isolation, level shifters, power <span class="nw">switches <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="npu"><div class="sk-top"><span class="sk-n">Dynamic power <span class="nw">analysis <span class="tg" role="img" aria-label="Used in Systolic"><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n"><span class="nw">DVFS <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article><article class="skc" data-g="so"><header><h3>Signoff & verification</h3><span class="cnt">6</span></header><ul><li class="sk" data-p="soc adpll"><div class="sk-top"><span class="sk-n">DRC / <span class="nw">LVS <span class="tg" role="img" aria-label="Used in SoC, ADPLL"><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="adpll soc"><div class="sk-top"><span class="sk-n">Antenna, ERC, <span class="nw">PEX <span class="tg" role="img" aria-label="Used in ADPLL, SoC"><i class="p-adpll" title="ADPLL"></i><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">IR drop &amp; EM <span class="nw">analysis <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Logic equivalence <span class="nw">(LEC) <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="dft soc"><div class="sk-top"><span class="sk-n">DFT: scan &amp; <span class="nw">ATPG <span class="tg" role="img" aria-label="Used in DFT, SoC"><i class="p-dft" title="DFT"></i><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="dft"><div class="sk-top"><span class="sk-n">Gate-level sim with <span class="nw">SDF <span class="tg" role="img" aria-label="Used in DFT"><i class="p-dft" title="DFT"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article><article class="skc" data-g="code"><header><h3>Open-source flow & scripting</h3><span class="cnt">7</span></header><ul><li class="sk" data-p="adpll"><div class="sk-top"><span class="sk-n">OpenLane / <span class="nw">OpenROAD <span class="tg" role="img" aria-label="Used in ADPLL"><i class="p-adpll" title="ADPLL"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="adpll"><div class="sk-top"><span class="sk-n">Magic · <span class="nw">KLayout <span class="tg" role="img" aria-label="Used in ADPLL"><i class="p-adpll" title="ADPLL"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n"><span class="nw">TCL <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p=""><div class="sk-top"><span class="sk-n">Python</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="adpll soc npu"><div class="sk-top"><span class="sk-n">Verilog / <span class="nw">SystemVerilog <span class="tg" role="img" aria-label="Used in ADPLL, SoC, Systolic"><i class="p-adpll" title="ADPLL"></i><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p=""><div class="sk-top"><span class="sk-n">Linux</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p=""><div class="sk-top"><span class="sk-n">Perl</span><span class="lv" data-lv="2" role="img" aria-label="2 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article><article class="skc" data-g="tools"><header><h3>EDA tools</h3><span class="cnt">10</span></header><ul><li class="sk" data-p="soc npu"><div class="sk-top"><span class="sk-n">Cadence <span class="nw">Innovus <span class="tg" role="img" aria-label="Used in SoC, Systolic"><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Synopsys <span class="nw">PrimeTime <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc npu dft"><div class="sk-top"><span class="sk-n">Synopsys Design <span class="nw">Compiler <span class="tg" role="img" aria-label="Used in SoC, Systolic, DFT"><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i><i class="p-dft" title="DFT"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Siemens <span class="nw">Calibre <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Ansys <span class="nw">RedHawk-SC <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Synopsys <span class="nw">SpyGlass <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Cadence <span class="nw">JasperGold <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Cadence Conformal · Synopsys <span class="nw">Formality <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="dft"><div class="sk-top"><span class="sk-n">Synopsys <span class="nw">TetraMAX <span class="tg" role="img" aria-label="Used in DFT"><i class="p-dft" title="DFT"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p=""><div class="sk-top"><span class="sk-n">Synopsys Fusion Compiler</span><span class="lv" data-lv="2" role="img" aria-label="2 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article>
+      <article class="skc" data-g="pi"><header><h3>Physical implementation</h3><span class="cnt">6</span></header><ul><li class="sk" data-p="soc adpll npu work"><div class="sk-top"><span class="sk-n">Floorplanning &amp; macro <span class="nw">placement <span class="tg" role="img" aria-label="Used in industry work, SoC, ADPLL, Systolic"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc npu work"><div class="sk-top"><span class="sk-n">Power planning &amp; grid <span class="nw">sizing <span class="tg" role="img" aria-label="Used in industry work, SoC, Systolic"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc npu work"><div class="sk-top"><span class="sk-n">Placement &amp; congestion <span class="nw">analysis <span class="tg" role="img" aria-label="Used in industry work, SoC, Systolic"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc adpll npu work"><div class="sk-top"><span class="sk-n">Clock tree <span class="nw">synthesis <span class="tg" role="img" aria-label="Used in industry work, SoC, ADPLL, Systolic"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc adpll npu work"><div class="sk-top"><span class="sk-n">Routing &amp; DRC <span class="nw">fixing <span class="tg" role="img" aria-label="Used in industry work, SoC, ADPLL, Systolic"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc work"><div class="sk-top"><span class="sk-n">Timing &amp; IR-drop <span class="nw">ECOs <span class="tg" role="img" aria-label="Used in industry work, SoC"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article><article class="skc" data-g="sta"><header><h3>Timing & constraints</h3><span class="cnt">3</span></header><ul><li class="sk" data-p="soc work"><div class="sk-top"><span class="sk-n">STA: setup / hold, <span class="nw">MCMM <span class="tg" role="img" aria-label="Used in industry work, SoC"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">SDC constraint <span class="nw">development <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">CDC / RDC <span class="nw">analysis <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article><article class="skc" data-g="lp"><header><h3>Low-power design</h3><span class="cnt">4</span></header><ul><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">UPF / IEEE 1801 power <span class="nw">intent <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="5" role="img" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Isolation, level shifters, power <span class="nw">switches <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="npu"><div class="sk-top"><span class="sk-n">Dynamic power <span class="nw">analysis <span class="tg" role="img" aria-label="Used in Systolic"><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n"><span class="nw">DVFS <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article><article class="skc" data-g="so"><header><h3>Signoff & verification</h3><span class="cnt">6</span></header><ul><li class="sk" data-p="soc adpll work"><div class="sk-top"><span class="sk-n">DRC / <span class="nw">LVS <span class="tg" role="img" aria-label="Used in industry work, SoC, ADPLL"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i><i class="p-adpll" title="ADPLL"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="adpll soc work"><div class="sk-top"><span class="sk-n">Antenna, ERC, <span class="nw">PEX <span class="tg" role="img" aria-label="Used in industry work, ADPLL, SoC"><i class="p-work" title="Industry"></i><i class="p-adpll" title="ADPLL"></i><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc work"><div class="sk-top"><span class="sk-n">IR drop &amp; EM <span class="nw">analysis <span class="tg" role="img" aria-label="Used in industry work, SoC"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Logic equivalence <span class="nw">(LEC) <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="dft soc"><div class="sk-top"><span class="sk-n">DFT: scan &amp; <span class="nw">ATPG <span class="tg" role="img" aria-label="Used in DFT, SoC"><i class="p-dft" title="DFT"></i><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="dft"><div class="sk-top"><span class="sk-n">Gate-level sim with <span class="nw">SDF <span class="tg" role="img" aria-label="Used in DFT"><i class="p-dft" title="DFT"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article><article class="skc" data-g="code"><header><h3>Open-source flow & scripting</h3><span class="cnt">7</span></header><ul><li class="sk" data-p="adpll"><div class="sk-top"><span class="sk-n">OpenLane / <span class="nw">OpenROAD <span class="tg" role="img" aria-label="Used in ADPLL"><i class="p-adpll" title="ADPLL"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="adpll"><div class="sk-top"><span class="sk-n">Magic · <span class="nw">KLayout <span class="tg" role="img" aria-label="Used in ADPLL"><i class="p-adpll" title="ADPLL"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc work"><div class="sk-top"><span class="sk-n"><span class="nw">TCL <span class="tg" role="img" aria-label="Used in industry work, SoC"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="work"><div class="sk-top"><span class="sk-n"><span class="nw">Python <span class="tg" role="img" aria-label="Used in industry work"><i class="p-work" title="Industry"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="adpll soc npu"><div class="sk-top"><span class="sk-n">Verilog / <span class="nw">SystemVerilog <span class="tg" role="img" aria-label="Used in ADPLL, SoC, Systolic"><i class="p-adpll" title="ADPLL"></i><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p=""><div class="sk-top"><span class="sk-n">Linux</span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p=""><div class="sk-top"><span class="sk-n">Perl</span><span class="lv" data-lv="2" role="img" aria-label="2 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article><article class="skc" data-g="tools"><header><h3>EDA tools</h3><span class="cnt">10</span></header><ul><li class="sk" data-p="soc npu work"><div class="sk-top"><span class="sk-n">Cadence <span class="nw">Innovus <span class="tg" role="img" aria-label="Used in industry work, SoC, Systolic"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc work"><div class="sk-top"><span class="sk-n">Synopsys <span class="nw">PrimeTime <span class="tg" role="img" aria-label="Used in industry work, SoC"><i class="p-work" title="Industry"></i><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc npu dft"><div class="sk-top"><span class="sk-n">Synopsys Design <span class="nw">Compiler <span class="tg" role="img" aria-label="Used in SoC, Systolic, DFT"><i class="p-soc" title="SoC"></i><i class="p-npu" title="Systolic"></i><i class="p-dft" title="DFT"></i></span></span></span><span class="lv" data-lv="4" role="img" aria-label="4 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Siemens <span class="nw">Calibre <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Ansys <span class="nw">RedHawk-SC <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Synopsys <span class="nw">SpyGlass <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Cadence <span class="nw">JasperGold <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="soc"><div class="sk-top"><span class="sk-n">Cadence Conformal · Synopsys <span class="nw">Formality <span class="tg" role="img" aria-label="Used in SoC"><i class="p-soc" title="SoC"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p="dft"><div class="sk-top"><span class="sk-n">Synopsys <span class="nw">TetraMAX <span class="tg" role="img" aria-label="Used in DFT"><i class="p-dft" title="DFT"></i></span></span></span><span class="lv" data-lv="3" role="img" aria-label="3 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li><li class="sk" data-p=""><div class="sk-top"><span class="sk-n">Synopsys Fusion Compiler</span><span class="lv" data-lv="2" role="img" aria-label="2 out of 5"><i></i><i></i><i></i><i></i><i></i></span></div></li></ul></article>
     </div>
   </div>
 </section>
@@ -347,10 +394,10 @@
       </div>
 
       <div class="rv">
-        <div class="sh"><span class="no">03</span><span>About</span><span class="rl"></span></div>
-        <h2 class="h2">Two years owning the backend, end to end.</h2>
+        <div class="sh"><span class="no">04</span><span>About</span><span class="rl"></span></div>
+        <h2 class="h2">From AMD to Astera Labs, owning the backend.</h2>
         <div class="bio">
-          <p>I finished my M.S. in Electrical and Computer Engineering at <b>California State University, Fresno</b>, where I spent two years as a research assistant to <b>Prof. Aaron Stillmaker</b>, chair of the ECE department.</p>
+          <p>I&rsquo;m a physical design engineer at <b>Astera Labs</b>, working on 7 nm high-speed connectivity silicon. Before that I spent two years at <b>AMD</b> in Bengaluru, first as an intern and then full-time, and in August 2026 I completed my M.S. in Electrical and Computer Engineering at <b>California State University, Fresno</b>.</p>
           <p>I am most at home between synthesis and signoff: the stretch where a netlist gets a floorplan, a power grid, a clock tree and wires, and then has to meet timing at every corner. I work in both the commercial stack industry signs off with and the open flow that let me take a chip to tapeout on my own.</p>
         </div>
 
@@ -363,22 +410,24 @@
             </div>
           </li>
           <li class="key">
-            <div class="when">Aug 2024 –<br>Aug 2026</div>
+            <div class="when">Jun 2022 –<br>Jul 2024</div>
             <div>
-              <h4>Research Assistant, Advanced VLSI Design</h4>
-              <div class="org">California State University, Fresno · with Prof. Aaron Stillmaker</div>
-              <ul>
-                <li>Multi-chiplet SoC architectures, UPF-driven multi-voltage implementation, and NoC-based physical design</li>
-                <li>RTL-to-GDSII signoff on Nangate 45 nm with Innovus, PrimeTime, Design Compiler, SpyGlass and JasperGold</li>
-                <li>Mentored about 25 graduate students through STA, SDC and CDC/lint debugging</li>
-              </ul>
+              <h4>Silicon Design Engineer, AMD</h4>
+              <div class="org">Bengaluru, India · intern, then full-time</div>
             </div>
           </li>
           <li>
             <div class="when">2024 – 2025</div>
             <div>
               <h4>DFT flow, systolic accelerator, chiplet SoC</h4>
-              <div class="org">Three RTL-to-GDSII designs, the last as team lead</div>
+              <div class="org">Three RTL-to-GDSII designs at Fresno State, the last as team lead</div>
+            </div>
+          </li>
+          <li class="key">
+            <div class="when">Aug 2025 –<br>Present</div>
+            <div>
+              <h4>Physical Design Engineer, Astera Labs</h4>
+              <div class="org">San Jose, CA · 7 nm connectivity silicon</div>
             </div>
           </li>
           <li class="key">
@@ -431,7 +480,7 @@
 <section id="research" class="alt">
   <div class="wrap">
     <div class="sec-top rv">
-      <div class="sh"><span class="no">04</span><span>Research &amp; credentials</span><span class="rl"></span></div>
+      <div class="sh"><span class="no">05</span><span>Research &amp; credentials</span><span class="rl"></span></div>
       <h2 class="h2">Two papers, and the badges to check.</h2>
     </div>
     <div class="rc">
@@ -518,9 +567,9 @@
 <section id="contact">
   <div class="wrap">
     <div class="sec-top rv">
-      <div class="sh"><span class="no">05</span><span>Contact</span><span class="rl"></span></div>
+      <div class="sh"><span class="no">06</span><span>Contact</span><span class="rl"></span></div>
       <h2 class="h2">Let's talk about your next tapeout.</h2>
-      <p class="lead">I'm looking for physical design, STA and ASIC backend roles in the US and can start now. Email is the fastest way to reach me.</p>
+      <p class="lead">I'm open to new physical design, STA and ASIC backend roles in the US. Email is the fastest way to reach me.</p>
     </div>
 
     <div class="contact">
@@ -584,7 +633,7 @@
 </main>
 
 <div class="dock" id="dock" aria-label="Quick contact">
-  <a class="dk pri" href="Govardhana_Kondapaturi_Resume.pdf" download><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg><span>Resume</span></a>
+  <a class="dk pri" href="Govardhana_Kondapaturi_Resume.pdf?v=20261013" download><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg><span>Resume</span></a>
   <a class="dk" href="mailto:srigovardhan96@gmail.com"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg><span>Email</span></a>
   <a class="dk" href="https://www.linkedin.com/in/sri-kondapaturi/" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-in"/></svg><span>LinkedIn</span></a>
 </div>
@@ -631,7 +680,7 @@
   <span id="toastT">Copied</span>
 </div>
 
-<script src="site.js" defer></script>
-<script src="hello.js" defer></script>
+<script src="site.js?v=20261013" defer></script>
+<script src="hello.js?v=20261013" defer></script>
 </body>
 </html>

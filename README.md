@@ -97,3 +97,7 @@ One scale, used everywhere: 72/44 px for the two display headings, 44/28 px sect
 ## Where each fact lives
 
 Each number appears once on the home page (on its project card) and in full on that project's page. The hero states the role, the cards carry the proof, and the About section carries the story. Keep it that way when adding content.
+
+## Experience
+
+The Experience section (01) sits between the intro and Projects in `index.html` (`<section id="experience">`). Each job is one `<li class="xp-i">`: dates on the left, company, role, location and bullets on the right. Skills used at work carry a grey dot and show under the "Industry" filter (`data-p="... work"`).
