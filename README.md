@@ -49,7 +49,7 @@ The page opens with "Hello, I'm Sri." and a film strip of personal photos, then 
 
 Out of the box the form opens the visitor's email app with their message filled in, so it works with zero setup. To receive messages directly instead:
 
-1. Sign up at formspree.io with `srigovardhan96@gmail.com` (free tier: 50 messages/month).
+1. Sign up at formspree.io with `govardhana.kondapaturi@gmail.com` (free tier: 50 messages/month).
 2. Create a form; copy its ID (the part after `/f/`).
 3. In `index.html`, replace `YOUR_FORM_ID` in `action="https://formspree.io/f/YOUR_FORM_ID"`.
 
