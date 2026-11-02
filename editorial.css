@@ -1,0 +1,42 @@
+/* ---------------------------------------------------------------
+   editorial.css — typography & air layer, loads after site.css
+   Instrument Serif display over the existing system. Screen only:
+   the print datasheet keeps its own styles untouched.
+   --------------------------------------------------------------- */
+@font-face{font-family:"Instrument Serif";src:url(instrument-serif-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Instrument Serif";src:url(instrument-serif-400i.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+
+@media screen{
+  :root{--serif:"Instrument Serif",Georgia,"Times New Roman",serif}
+
+  /* Serif has one weight: never let the browser fake a bold. */
+  .hl-h,.pp-h,.bw-v,.doc-t,.kr-v,.xp-co,.xp-logo,.xp-t,.name,.h2{font-synthesis:none}
+
+  /* Hero name */
+  .name{font-family:var(--serif);font-weight:400;font-size:clamp(58px,9vw,120px);
+    letter-spacing:-.02em;line-height:.93;margin-bottom:24px}
+  .name span:last-child{font-style:italic;color:var(--cu)}
+
+  /* Hello heading */
+  .hl-h{font-weight:400;font-size:clamp(46px,6.4vw,82px);letter-spacing:-.018em;line-height:.98}
+  .hl-last{font-style:italic;color:var(--cu)}
+
+  /* Section headings */
+  .h2{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5vw,64px);
+    letter-spacing:-.014em;line-height:1.02;max-width:21ch;margin-bottom:24px}
+
+  /* Case-study page heroes */
+  .pp-h{font-weight:400;font-size:clamp(38px,5.4vw,68px);letter-spacing:-.016em;line-height:1.04}
+
+  /* Values and titles that already route through the serif token */
+  .xp-co,.xp-t{font-weight:400;letter-spacing:-.01em}
+  .bw-v,.kr-v,.doc-t{font-weight:400}
+
+  /* Supporting text, slightly larger to match the new scale */
+  .tagline{font-size:clamp(18px,2vw,22px);max-width:40ch}
+  .eyebrow{margin-bottom:20px}
+
+  /* Air: main-page sections breathe like an editorial spread */
+  #experience,#work,#skills,#about,#endorse,#research,#contact{padding-block:clamp(104px,13vw,156px)}
+  #hello{padding-block:clamp(84px,10vw,120px)}
+}
